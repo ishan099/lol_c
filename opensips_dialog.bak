@@ -1,0 +1,5113 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.6.2
+-- Dumped by pg_dump version 9.6.2
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: concat(text, text); Type: FUNCTION; Schema: public; Owner: facetone
+--
+
+CREATE FUNCTION concat(text, text) RETURNS text
+    LANGUAGE sql
+    AS $_$SELECT $1 || $2;$_$;
+
+
+ALTER FUNCTION public.concat(text, text) OWNER TO facetone;
+
+--
+-- Name: rand(); Type: FUNCTION; Schema: public; Owner: facetone
+--
+
+CREATE FUNCTION rand() RETURNS double precision
+    LANGUAGE sql
+    AS $$SELECT random();$$;
+
+
+ALTER FUNCTION public.rand() OWNER TO facetone;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: acc; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE acc (
+    id integer NOT NULL,
+    method character varying(16) DEFAULT ''::character varying NOT NULL,
+    from_tag character varying(64) DEFAULT ''::character varying NOT NULL,
+    to_tag character varying(64) DEFAULT ''::character varying NOT NULL,
+    callid character varying(64) DEFAULT ''::character varying NOT NULL,
+    sip_code character varying(3) DEFAULT ''::character varying NOT NULL,
+    sip_reason character varying(32) DEFAULT ''::character varying NOT NULL,
+    "time" timestamp without time zone NOT NULL,
+    duration integer DEFAULT 0 NOT NULL,
+    ms_duration integer DEFAULT 0 NOT NULL,
+    setuptime integer DEFAULT 0 NOT NULL,
+    created timestamp without time zone
+);
+
+
+ALTER TABLE acc OWNER TO facetone;
+
+--
+-- Name: acc_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE acc_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE acc_id_seq OWNER TO facetone;
+
+--
+-- Name: acc_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE acc_id_seq OWNED BY acc.id;
+
+
+--
+-- Name: active_watchers; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE active_watchers (
+    id integer NOT NULL,
+    presentity_uri character varying(128) NOT NULL,
+    watcher_username character varying(64) NOT NULL,
+    watcher_domain character varying(64) NOT NULL,
+    to_user character varying(64) NOT NULL,
+    to_domain character varying(64) NOT NULL,
+    event character varying(64) DEFAULT 'presence'::character varying NOT NULL,
+    event_id character varying(64),
+    to_tag character varying(64) NOT NULL,
+    from_tag character varying(64) NOT NULL,
+    callid character varying(64) NOT NULL,
+    local_cseq integer NOT NULL,
+    remote_cseq integer NOT NULL,
+    contact character varying(128) NOT NULL,
+    record_route text,
+    expires integer NOT NULL,
+    status integer DEFAULT 2 NOT NULL,
+    reason character varying(64),
+    version integer DEFAULT 0 NOT NULL,
+    socket_info character varying(64) NOT NULL,
+    local_contact character varying(128) NOT NULL
+);
+
+
+ALTER TABLE active_watchers OWNER TO facetone;
+
+--
+-- Name: active_watchers_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE active_watchers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE active_watchers_id_seq OWNER TO facetone;
+
+--
+-- Name: active_watchers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE active_watchers_id_seq OWNED BY active_watchers.id;
+
+
+--
+-- Name: address; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE address (
+    id integer NOT NULL,
+    grp smallint DEFAULT 0 NOT NULL,
+    ip character varying(50) NOT NULL,
+    mask smallint DEFAULT 32 NOT NULL,
+    port smallint DEFAULT 0 NOT NULL,
+    proto character varying(4) DEFAULT 'any'::character varying NOT NULL,
+    pattern character varying(64) DEFAULT NULL::character varying,
+    context_info character varying(32) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE address OWNER TO facetone;
+
+--
+-- Name: address_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE address_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE address_id_seq OWNER TO facetone;
+
+--
+-- Name: address_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE address_id_seq OWNED BY address.id;
+
+
+--
+-- Name: aliases; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE aliases (
+    id integer NOT NULL,
+    username character varying(64) DEFAULT ''::character varying NOT NULL,
+    domain character varying(64) DEFAULT ''::character varying NOT NULL,
+    contact character varying(255) DEFAULT ''::character varying NOT NULL,
+    received character varying(128) DEFAULT NULL::character varying,
+    path character varying(255) DEFAULT NULL::character varying,
+    expires timestamp without time zone DEFAULT '2020-05-28 21:32:15'::timestamp without time zone NOT NULL,
+    q real DEFAULT 1.0 NOT NULL,
+    callid character varying(255) DEFAULT 'Default-Call-ID'::character varying NOT NULL,
+    cseq integer DEFAULT 13 NOT NULL,
+    last_modified timestamp without time zone DEFAULT '1900-01-01 00:00:01'::timestamp without time zone NOT NULL,
+    flags integer DEFAULT 0 NOT NULL,
+    cflags character varying(255) DEFAULT NULL::character varying,
+    user_agent character varying(255) DEFAULT ''::character varying NOT NULL,
+    socket character varying(64) DEFAULT NULL::character varying,
+    methods integer,
+    sip_instance character varying(255) DEFAULT NULL::character varying,
+    attr character varying(255) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE aliases OWNER TO facetone;
+
+--
+-- Name: aliases_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE aliases_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE aliases_id_seq OWNER TO facetone;
+
+--
+-- Name: aliases_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE aliases_id_seq OWNED BY aliases.id;
+
+
+--
+-- Name: b2b_entities; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE b2b_entities (
+    id integer NOT NULL,
+    type integer NOT NULL,
+    state integer NOT NULL,
+    ruri character varying(128),
+    from_uri character varying(128) NOT NULL,
+    to_uri character varying(128) NOT NULL,
+    from_dname character varying(64),
+    to_dname character varying(64),
+    tag0 character varying(64) NOT NULL,
+    tag1 character varying(64),
+    callid character varying(64) NOT NULL,
+    cseq0 integer NOT NULL,
+    cseq1 integer,
+    contact0 character varying(128) NOT NULL,
+    contact1 character varying(128),
+    route0 text,
+    route1 text,
+    sockinfo_srv character varying(64),
+    param character varying(128) NOT NULL,
+    lm integer NOT NULL,
+    lrc integer,
+    lic integer,
+    leg_cseq integer,
+    leg_route text,
+    leg_tag character varying(64),
+    leg_contact character varying(128),
+    leg_sockinfo character varying(128)
+);
+
+
+ALTER TABLE b2b_entities OWNER TO facetone;
+
+--
+-- Name: b2b_entities_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE b2b_entities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE b2b_entities_id_seq OWNER TO facetone;
+
+--
+-- Name: b2b_entities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE b2b_entities_id_seq OWNED BY b2b_entities.id;
+
+
+--
+-- Name: b2b_logic; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE b2b_logic (
+    id integer NOT NULL,
+    si_key character varying(64) NOT NULL,
+    scenario character varying(64),
+    sstate integer NOT NULL,
+    next_sstate integer NOT NULL,
+    sparam0 character varying(64),
+    sparam1 character varying(64),
+    sparam2 character varying(64),
+    sparam3 character varying(64),
+    sparam4 character varying(64),
+    sdp text,
+    lifetime integer DEFAULT 0 NOT NULL,
+    e1_type integer NOT NULL,
+    e1_sid character varying(64),
+    e1_from character varying(128) NOT NULL,
+    e1_to character varying(128) NOT NULL,
+    e1_key character varying(64) NOT NULL,
+    e2_type integer NOT NULL,
+    e2_sid character varying(64),
+    e2_from character varying(128) NOT NULL,
+    e2_to character varying(128) NOT NULL,
+    e2_key character varying(64) NOT NULL,
+    e3_type integer,
+    e3_sid character varying(64),
+    e3_from character varying(128),
+    e3_to character varying(128),
+    e3_key character varying(64)
+);
+
+
+ALTER TABLE b2b_logic OWNER TO facetone;
+
+--
+-- Name: b2b_logic_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE b2b_logic_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE b2b_logic_id_seq OWNER TO facetone;
+
+--
+-- Name: b2b_logic_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE b2b_logic_id_seq OWNED BY b2b_logic.id;
+
+
+--
+-- Name: cachedb; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE cachedb (
+    keyname character varying(255) NOT NULL,
+    value text NOT NULL,
+    counter integer DEFAULT 0 NOT NULL,
+    expires integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE cachedb OWNER TO facetone;
+
+--
+-- Name: carrierfailureroute; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE carrierfailureroute (
+    id integer NOT NULL,
+    carrier integer DEFAULT 0 NOT NULL,
+    domain character varying(64) DEFAULT ''::character varying NOT NULL,
+    scan_prefix character varying(64) DEFAULT ''::character varying NOT NULL,
+    host_name character varying(128) DEFAULT ''::character varying NOT NULL,
+    reply_code character varying(3) DEFAULT ''::character varying NOT NULL,
+    flags integer DEFAULT 0 NOT NULL,
+    mask integer DEFAULT 0 NOT NULL,
+    next_domain character varying(64) DEFAULT ''::character varying NOT NULL,
+    description character varying(255) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE carrierfailureroute OWNER TO facetone;
+
+--
+-- Name: carrierfailureroute_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE carrierfailureroute_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE carrierfailureroute_id_seq OWNER TO facetone;
+
+--
+-- Name: carrierfailureroute_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE carrierfailureroute_id_seq OWNED BY carrierfailureroute.id;
+
+
+--
+-- Name: carrierroute; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE carrierroute (
+    id integer NOT NULL,
+    carrier integer DEFAULT 0 NOT NULL,
+    domain character varying(64) DEFAULT ''::character varying NOT NULL,
+    scan_prefix character varying(64) DEFAULT ''::character varying NOT NULL,
+    flags integer DEFAULT 0 NOT NULL,
+    mask integer DEFAULT 0 NOT NULL,
+    prob real DEFAULT 0 NOT NULL,
+    strip integer DEFAULT 0 NOT NULL,
+    rewrite_host character varying(128) DEFAULT ''::character varying NOT NULL,
+    rewrite_prefix character varying(64) DEFAULT ''::character varying NOT NULL,
+    rewrite_suffix character varying(64) DEFAULT ''::character varying NOT NULL,
+    description character varying(255) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE carrierroute OWNER TO facetone;
+
+--
+-- Name: carrierroute_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE carrierroute_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE carrierroute_id_seq OWNER TO facetone;
+
+--
+-- Name: carrierroute_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE carrierroute_id_seq OWNED BY carrierroute.id;
+
+
+--
+-- Name: cc_agents; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE cc_agents (
+    id integer NOT NULL,
+    agentid character varying(128) NOT NULL,
+    location character varying(128) NOT NULL,
+    logstate integer DEFAULT 0 NOT NULL,
+    skills character varying(255) NOT NULL,
+    last_call_end integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE cc_agents OWNER TO facetone;
+
+--
+-- Name: cc_agents_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE cc_agents_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE cc_agents_id_seq OWNER TO facetone;
+
+--
+-- Name: cc_agents_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE cc_agents_id_seq OWNED BY cc_agents.id;
+
+
+--
+-- Name: cc_calls; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE cc_calls (
+    id integer NOT NULL,
+    state integer NOT NULL,
+    ig_cback integer NOT NULL,
+    no_rej integer NOT NULL,
+    setup_time integer NOT NULL,
+    eta integer NOT NULL,
+    last_start integer NOT NULL,
+    recv_time integer NOT NULL,
+    caller_dn character varying(128) NOT NULL,
+    caller_un character varying(128) NOT NULL,
+    b2buaid character varying(128) DEFAULT ''::character varying NOT NULL,
+    flow character varying(128) NOT NULL,
+    agent character varying(128) NOT NULL
+);
+
+
+ALTER TABLE cc_calls OWNER TO facetone;
+
+--
+-- Name: cc_calls_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE cc_calls_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE cc_calls_id_seq OWNER TO facetone;
+
+--
+-- Name: cc_calls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE cc_calls_id_seq OWNED BY cc_calls.id;
+
+
+--
+-- Name: cc_cdrs; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE cc_cdrs (
+    id integer NOT NULL,
+    caller character varying(64) NOT NULL,
+    received_timestamp timestamp without time zone NOT NULL,
+    wait_time integer DEFAULT 0 NOT NULL,
+    pickup_time integer DEFAULT 0 NOT NULL,
+    talk_time integer DEFAULT 0 NOT NULL,
+    flow_id character varying(128) NOT NULL,
+    agent_id character varying(128) DEFAULT NULL::character varying,
+    call_type integer DEFAULT '-1'::integer NOT NULL,
+    rejected integer DEFAULT 0 NOT NULL,
+    fstats integer DEFAULT 0 NOT NULL,
+    cid integer DEFAULT 0
+);
+
+
+ALTER TABLE cc_cdrs OWNER TO facetone;
+
+--
+-- Name: cc_cdrs_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE cc_cdrs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE cc_cdrs_id_seq OWNER TO facetone;
+
+--
+-- Name: cc_cdrs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE cc_cdrs_id_seq OWNED BY cc_cdrs.id;
+
+
+--
+-- Name: cc_flows; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE cc_flows (
+    id integer NOT NULL,
+    flowid character varying(64) NOT NULL,
+    priority integer DEFAULT 256 NOT NULL,
+    skill character varying(64) NOT NULL,
+    prependcid character varying(32) NOT NULL,
+    message_welcome character varying(128) DEFAULT NULL::character varying,
+    message_queue character varying(128) NOT NULL
+);
+
+
+ALTER TABLE cc_flows OWNER TO facetone;
+
+--
+-- Name: cc_flows_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE cc_flows_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE cc_flows_id_seq OWNER TO facetone;
+
+--
+-- Name: cc_flows_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE cc_flows_id_seq OWNED BY cc_flows.id;
+
+
+--
+-- Name: clusterer; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE clusterer (
+    id integer NOT NULL,
+    cluster_id integer NOT NULL,
+    machine_id integer NOT NULL,
+    url character varying(64) NOT NULL,
+    state integer DEFAULT 1 NOT NULL,
+    last_attempt bigint DEFAULT 0 NOT NULL,
+    failed_attempts integer DEFAULT 3 NOT NULL,
+    no_tries integer DEFAULT 0 NOT NULL,
+    duration integer DEFAULT 30 NOT NULL,
+    description character varying(64)
+);
+
+
+ALTER TABLE clusterer OWNER TO facetone;
+
+--
+-- Name: clusterer_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE clusterer_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE clusterer_id_seq OWNER TO facetone;
+
+--
+-- Name: clusterer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE clusterer_id_seq OWNED BY clusterer.id;
+
+
+--
+-- Name: cpl; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE cpl (
+    id integer NOT NULL,
+    username character varying(64) NOT NULL,
+    domain character varying(64) DEFAULT ''::character varying NOT NULL,
+    cpl_xml text,
+    cpl_bin text
+);
+
+
+ALTER TABLE cpl OWNER TO facetone;
+
+--
+-- Name: cpl_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE cpl_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE cpl_id_seq OWNER TO facetone;
+
+--
+-- Name: cpl_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE cpl_id_seq OWNED BY cpl.id;
+
+
+--
+-- Name: dbaliases; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE dbaliases (
+    id integer NOT NULL,
+    alias_username character varying(64) DEFAULT ''::character varying NOT NULL,
+    alias_domain character varying(64) DEFAULT ''::character varying NOT NULL,
+    username character varying(64) DEFAULT ''::character varying NOT NULL,
+    domain character varying(64) DEFAULT ''::character varying NOT NULL
+);
+
+
+ALTER TABLE dbaliases OWNER TO facetone;
+
+--
+-- Name: dbaliases_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE dbaliases_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE dbaliases_id_seq OWNER TO facetone;
+
+--
+-- Name: dbaliases_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE dbaliases_id_seq OWNED BY dbaliases.id;
+
+
+--
+-- Name: dialog; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE dialog (
+    dlg_id bigint NOT NULL,
+    callid character varying(255) NOT NULL,
+    from_uri character varying(128) NOT NULL,
+    from_tag character varying(64) NOT NULL,
+    to_uri character varying(128) NOT NULL,
+    to_tag character varying(64) NOT NULL,
+    mangled_from_uri character varying(64) DEFAULT NULL::character varying,
+    mangled_to_uri character varying(64) DEFAULT NULL::character varying,
+    caller_cseq character varying(11) NOT NULL,
+    callee_cseq character varying(11) NOT NULL,
+    caller_ping_cseq integer NOT NULL,
+    callee_ping_cseq integer NOT NULL,
+    caller_route_set text,
+    callee_route_set text,
+    caller_contact character varying(128),
+    callee_contact character varying(128),
+    caller_sock character varying(64) NOT NULL,
+    callee_sock character varying(64) NOT NULL,
+    state integer NOT NULL,
+    start_time integer NOT NULL,
+    timeout integer NOT NULL,
+    vars bytea,
+    profiles text,
+    script_flags integer DEFAULT 0 NOT NULL,
+    module_flags integer DEFAULT 0 NOT NULL,
+    flags integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE dialog OWNER TO facetone;
+
+--
+-- Name: dialplan; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE dialplan (
+    id integer NOT NULL,
+    dpid integer NOT NULL,
+    pr integer NOT NULL,
+    match_op integer NOT NULL,
+    match_exp character varying(64) NOT NULL,
+    match_flags integer NOT NULL,
+    subst_exp character varying(64),
+    repl_exp character varying(32),
+    timerec character varying(255),
+    disabled integer DEFAULT 0 NOT NULL,
+    attrs character varying(32)
+);
+
+
+ALTER TABLE dialplan OWNER TO facetone;
+
+--
+-- Name: dialplan_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE dialplan_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE dialplan_id_seq OWNER TO facetone;
+
+--
+-- Name: dialplan_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE dialplan_id_seq OWNED BY dialplan.id;
+
+
+--
+-- Name: dispatcher; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE dispatcher (
+    id integer NOT NULL,
+    setid integer DEFAULT 0 NOT NULL,
+    destination character varying(192) DEFAULT ''::character varying NOT NULL,
+    socket character varying(128) DEFAULT NULL::character varying,
+    state integer DEFAULT 0 NOT NULL,
+    weight integer DEFAULT 1 NOT NULL,
+    priority integer DEFAULT 0 NOT NULL,
+    attrs character varying(128) DEFAULT ''::character varying NOT NULL,
+    description character varying(64) DEFAULT ''::character varying NOT NULL
+);
+
+
+ALTER TABLE dispatcher OWNER TO facetone;
+
+--
+-- Name: dispatcher_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE dispatcher_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE dispatcher_id_seq OWNER TO facetone;
+
+--
+-- Name: dispatcher_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE dispatcher_id_seq OWNED BY dispatcher.id;
+
+
+--
+-- Name: domain; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE domain (
+    id integer NOT NULL,
+    domain character varying(64) DEFAULT ''::character varying NOT NULL,
+    attrs character varying(255) DEFAULT NULL::character varying,
+    last_modified timestamp without time zone DEFAULT '1900-01-01 00:00:01'::timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE domain OWNER TO facetone;
+
+--
+-- Name: domain_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE domain_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE domain_id_seq OWNER TO facetone;
+
+--
+-- Name: domain_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE domain_id_seq OWNED BY domain.id;
+
+
+--
+-- Name: domainpolicy; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE domainpolicy (
+    id integer NOT NULL,
+    rule character varying(255) NOT NULL,
+    type character varying(255) NOT NULL,
+    att character varying(255),
+    val character varying(128),
+    description character varying(255) NOT NULL
+);
+
+
+ALTER TABLE domainpolicy OWNER TO facetone;
+
+--
+-- Name: domainpolicy_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE domainpolicy_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE domainpolicy_id_seq OWNER TO facetone;
+
+--
+-- Name: domainpolicy_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE domainpolicy_id_seq OWNED BY domainpolicy.id;
+
+
+--
+-- Name: dr_carriers; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE dr_carriers (
+    id integer NOT NULL,
+    carrierid character varying(64) NOT NULL,
+    gwlist character varying(255) NOT NULL,
+    flags integer DEFAULT 0 NOT NULL,
+    state integer DEFAULT 0 NOT NULL,
+    attrs character varying(255) DEFAULT ''::character varying,
+    description character varying(128) DEFAULT ''::character varying NOT NULL
+);
+
+
+ALTER TABLE dr_carriers OWNER TO facetone;
+
+--
+-- Name: dr_carriers_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE dr_carriers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE dr_carriers_id_seq OWNER TO facetone;
+
+--
+-- Name: dr_carriers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE dr_carriers_id_seq OWNED BY dr_carriers.id;
+
+
+--
+-- Name: dr_gateways; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE dr_gateways (
+    id integer NOT NULL,
+    gwid character varying(64) NOT NULL,
+    type integer DEFAULT 0 NOT NULL,
+    address character varying(128) NOT NULL,
+    strip integer DEFAULT 0 NOT NULL,
+    pri_prefix character varying(16) DEFAULT NULL::character varying,
+    attrs character varying(255) DEFAULT NULL::character varying,
+    probe_mode integer DEFAULT 0 NOT NULL,
+    state integer DEFAULT 0 NOT NULL,
+    socket character varying(128) DEFAULT NULL::character varying,
+    description character varying(128) DEFAULT ''::character varying NOT NULL
+);
+
+
+ALTER TABLE dr_gateways OWNER TO facetone;
+
+--
+-- Name: dr_gateways_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE dr_gateways_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE dr_gateways_id_seq OWNER TO facetone;
+
+--
+-- Name: dr_gateways_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE dr_gateways_id_seq OWNED BY dr_gateways.id;
+
+
+--
+-- Name: dr_groups; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE dr_groups (
+    id integer NOT NULL,
+    username character varying(64) NOT NULL,
+    domain character varying(128) DEFAULT ''::character varying NOT NULL,
+    groupid integer DEFAULT 0 NOT NULL,
+    description character varying(128) DEFAULT ''::character varying NOT NULL
+);
+
+
+ALTER TABLE dr_groups OWNER TO facetone;
+
+--
+-- Name: dr_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE dr_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE dr_groups_id_seq OWNER TO facetone;
+
+--
+-- Name: dr_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE dr_groups_id_seq OWNED BY dr_groups.id;
+
+
+--
+-- Name: dr_partitions; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE dr_partitions (
+    id integer NOT NULL,
+    partition_name character varying(255) NOT NULL,
+    db_url character varying(255) NOT NULL,
+    drd_table character varying(255),
+    drr_table character varying(255),
+    drg_table character varying(255),
+    drc_table character varying(255),
+    ruri_avp character varying(255),
+    gw_id_avp character varying(255),
+    gw_priprefix_avp character varying(255),
+    gw_sock_avp character varying(255),
+    rule_id_avp character varying(255),
+    rule_prefix_avp character varying(255),
+    carrier_id_avp character varying(255)
+);
+
+
+ALTER TABLE dr_partitions OWNER TO facetone;
+
+--
+-- Name: dr_partitions_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE dr_partitions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE dr_partitions_id_seq OWNER TO facetone;
+
+--
+-- Name: dr_partitions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE dr_partitions_id_seq OWNED BY dr_partitions.id;
+
+
+--
+-- Name: dr_rules; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE dr_rules (
+    ruleid integer NOT NULL,
+    groupid character varying(255) NOT NULL,
+    prefix character varying(64) NOT NULL,
+    timerec character varying(255) NOT NULL,
+    priority integer DEFAULT 0 NOT NULL,
+    routeid character varying(255) DEFAULT NULL::character varying,
+    gwlist character varying(255) NOT NULL,
+    attrs character varying(255) DEFAULT NULL::character varying,
+    description character varying(128) DEFAULT ''::character varying NOT NULL
+);
+
+
+ALTER TABLE dr_rules OWNER TO facetone;
+
+--
+-- Name: dr_rules_ruleid_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE dr_rules_ruleid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE dr_rules_ruleid_seq OWNER TO facetone;
+
+--
+-- Name: dr_rules_ruleid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE dr_rules_ruleid_seq OWNED BY dr_rules.ruleid;
+
+
+--
+-- Name: emergency_report; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE emergency_report (
+    id integer NOT NULL,
+    callid character varying(25) NOT NULL,
+    selectiveroutingid character varying(11) NOT NULL,
+    routingesn integer DEFAULT 0 NOT NULL,
+    npa integer DEFAULT 0 NOT NULL,
+    esgwri character varying(50) NOT NULL,
+    lro character varying(20) NOT NULL,
+    vpc_organizationname character varying(50) NOT NULL,
+    vpc_hostname character varying(50) NOT NULL,
+    vpc_timestamp character varying(30) NOT NULL,
+    result character varying(4) NOT NULL,
+    disposition character varying(10) NOT NULL
+);
+
+
+ALTER TABLE emergency_report OWNER TO facetone;
+
+--
+-- Name: emergency_report_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE emergency_report_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE emergency_report_id_seq OWNER TO facetone;
+
+--
+-- Name: emergency_report_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE emergency_report_id_seq OWNED BY emergency_report.id;
+
+
+--
+-- Name: emergency_routing; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE emergency_routing (
+    id integer NOT NULL,
+    selectiveroutingid character varying(11) NOT NULL,
+    routingesn integer DEFAULT 0 NOT NULL,
+    npa integer DEFAULT 0 NOT NULL,
+    esgwri character varying(50) NOT NULL
+);
+
+
+ALTER TABLE emergency_routing OWNER TO facetone;
+
+--
+-- Name: emergency_routing_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE emergency_routing_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE emergency_routing_id_seq OWNER TO facetone;
+
+--
+-- Name: emergency_routing_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE emergency_routing_id_seq OWNED BY emergency_routing.id;
+
+
+--
+-- Name: emergency_service_provider; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE emergency_service_provider (
+    id integer NOT NULL,
+    organizationname character varying(50) NOT NULL,
+    hostid character varying(30) NOT NULL,
+    nenaid character varying(50) NOT NULL,
+    contact character varying(20) NOT NULL,
+    certuri character varying(50) NOT NULL,
+    nodeip character varying(20) NOT NULL,
+    attribution integer NOT NULL
+);
+
+
+ALTER TABLE emergency_service_provider OWNER TO facetone;
+
+--
+-- Name: emergency_service_provider_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE emergency_service_provider_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE emergency_service_provider_id_seq OWNER TO facetone;
+
+--
+-- Name: emergency_service_provider_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE emergency_service_provider_id_seq OWNED BY emergency_service_provider.id;
+
+
+--
+-- Name: fraud_detection; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE fraud_detection (
+    ruleid integer NOT NULL,
+    profileid integer NOT NULL,
+    prefix character varying(64) NOT NULL,
+    start_hour character varying(5) NOT NULL,
+    end_hour character varying(5) NOT NULL,
+    daysoftheweek character varying(64) NOT NULL,
+    cpm_warning integer NOT NULL,
+    cpm_critical integer NOT NULL,
+    call_duration_warning integer NOT NULL,
+    call_duration_critical integer NOT NULL,
+    total_calls_warning integer NOT NULL,
+    total_calls_critical integer NOT NULL,
+    concurrent_calls_warning integer NOT NULL,
+    concurrent_calls_critical integer NOT NULL,
+    sequential_calls_warning integer NOT NULL,
+    sequential_calls_critical integer NOT NULL
+);
+
+
+ALTER TABLE fraud_detection OWNER TO facetone;
+
+--
+-- Name: fraud_detection_ruleid_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE fraud_detection_ruleid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE fraud_detection_ruleid_seq OWNER TO facetone;
+
+--
+-- Name: fraud_detection_ruleid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE fraud_detection_ruleid_seq OWNED BY fraud_detection.ruleid;
+
+
+--
+-- Name: globalblacklist; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE globalblacklist (
+    id integer NOT NULL,
+    prefix character varying(64) DEFAULT ''::character varying NOT NULL,
+    whitelist smallint DEFAULT 0 NOT NULL,
+    description character varying(255) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE globalblacklist OWNER TO facetone;
+
+--
+-- Name: globalblacklist_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE globalblacklist_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE globalblacklist_id_seq OWNER TO facetone;
+
+--
+-- Name: globalblacklist_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE globalblacklist_id_seq OWNED BY globalblacklist.id;
+
+
+--
+-- Name: grp; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE grp (
+    id integer NOT NULL,
+    username character varying(64) DEFAULT ''::character varying NOT NULL,
+    domain character varying(64) DEFAULT ''::character varying NOT NULL,
+    grp character varying(64) DEFAULT ''::character varying NOT NULL,
+    last_modified timestamp without time zone DEFAULT '1900-01-01 00:00:01'::timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE grp OWNER TO facetone;
+
+--
+-- Name: grp_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE grp_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE grp_id_seq OWNER TO facetone;
+
+--
+-- Name: grp_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE grp_id_seq OWNED BY grp.id;
+
+
+--
+-- Name: imc_members; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE imc_members (
+    id integer NOT NULL,
+    username character varying(64) NOT NULL,
+    domain character varying(64) NOT NULL,
+    room character varying(64) NOT NULL,
+    flag integer NOT NULL
+);
+
+
+ALTER TABLE imc_members OWNER TO facetone;
+
+--
+-- Name: imc_members_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE imc_members_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE imc_members_id_seq OWNER TO facetone;
+
+--
+-- Name: imc_members_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE imc_members_id_seq OWNED BY imc_members.id;
+
+
+--
+-- Name: imc_rooms; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE imc_rooms (
+    id integer NOT NULL,
+    name character varying(64) NOT NULL,
+    domain character varying(64) NOT NULL,
+    flag integer NOT NULL
+);
+
+
+ALTER TABLE imc_rooms OWNER TO facetone;
+
+--
+-- Name: imc_rooms_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE imc_rooms_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE imc_rooms_id_seq OWNER TO facetone;
+
+--
+-- Name: imc_rooms_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE imc_rooms_id_seq OWNED BY imc_rooms.id;
+
+
+--
+-- Name: load_balancer; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE load_balancer (
+    id integer NOT NULL,
+    group_id integer DEFAULT 0 NOT NULL,
+    dst_uri character varying(128) NOT NULL,
+    resources character varying(255) NOT NULL,
+    probe_mode integer DEFAULT 0 NOT NULL,
+    description character varying(128) DEFAULT ''::character varying NOT NULL
+);
+
+
+ALTER TABLE load_balancer OWNER TO facetone;
+
+--
+-- Name: load_balancer_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE load_balancer_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE load_balancer_id_seq OWNER TO facetone;
+
+--
+-- Name: load_balancer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE load_balancer_id_seq OWNED BY load_balancer.id;
+
+
+--
+-- Name: location; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE location (
+    contact_id bigint NOT NULL,
+    username character varying(64) DEFAULT ''::character varying NOT NULL,
+    domain character varying(64) DEFAULT NULL::character varying,
+    contact character varying(255) DEFAULT ''::character varying NOT NULL,
+    received character varying(128) DEFAULT NULL::character varying,
+    path character varying(255) DEFAULT NULL::character varying,
+    expires timestamp without time zone DEFAULT '2020-05-28 21:32:15'::timestamp without time zone NOT NULL,
+    q real DEFAULT 1.0 NOT NULL,
+    callid character varying(255) DEFAULT 'Default-Call-ID'::character varying NOT NULL,
+    cseq integer DEFAULT 13 NOT NULL,
+    last_modified timestamp without time zone DEFAULT '1900-01-01 00:00:01'::timestamp without time zone NOT NULL,
+    flags integer DEFAULT 0 NOT NULL,
+    cflags character varying(255) DEFAULT NULL::character varying,
+    user_agent character varying(255) DEFAULT ''::character varying NOT NULL,
+    socket character varying(64) DEFAULT NULL::character varying,
+    methods integer,
+    sip_instance character varying(255) DEFAULT NULL::character varying,
+    attr character varying(255) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE location OWNER TO facetone;
+
+--
+-- Name: location_contact_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE location_contact_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE location_contact_id_seq OWNER TO facetone;
+
+--
+-- Name: location_contact_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE location_contact_id_seq OWNED BY location.contact_id;
+
+
+--
+-- Name: missed_calls; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE missed_calls (
+    id integer NOT NULL,
+    method character varying(16) DEFAULT ''::character varying NOT NULL,
+    from_tag character varying(64) DEFAULT ''::character varying NOT NULL,
+    to_tag character varying(64) DEFAULT ''::character varying NOT NULL,
+    callid character varying(64) DEFAULT ''::character varying NOT NULL,
+    sip_code character varying(3) DEFAULT ''::character varying NOT NULL,
+    sip_reason character varying(32) DEFAULT ''::character varying NOT NULL,
+    "time" timestamp without time zone NOT NULL,
+    setuptime integer DEFAULT 0 NOT NULL,
+    created timestamp without time zone
+);
+
+
+ALTER TABLE missed_calls OWNER TO facetone;
+
+--
+-- Name: missed_calls_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE missed_calls_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE missed_calls_id_seq OWNER TO facetone;
+
+--
+-- Name: missed_calls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE missed_calls_id_seq OWNED BY missed_calls.id;
+
+
+--
+-- Name: presentity; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE presentity (
+    id integer NOT NULL,
+    username character varying(64) NOT NULL,
+    domain character varying(64) NOT NULL,
+    event character varying(64) NOT NULL,
+    etag character varying(64) NOT NULL,
+    expires integer NOT NULL,
+    received_time integer NOT NULL,
+    body bytea NOT NULL,
+    extra_hdrs bytea DEFAULT '\x'::bytea NOT NULL,
+    sender character varying(128) NOT NULL
+);
+
+
+ALTER TABLE presentity OWNER TO facetone;
+
+--
+-- Name: presentity_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE presentity_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE presentity_id_seq OWNER TO facetone;
+
+--
+-- Name: presentity_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE presentity_id_seq OWNED BY presentity.id;
+
+
+--
+-- Name: pua; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE pua (
+    id integer NOT NULL,
+    pres_uri character varying(128) NOT NULL,
+    pres_id character varying(255) NOT NULL,
+    event integer NOT NULL,
+    expires integer NOT NULL,
+    desired_expires integer NOT NULL,
+    flag integer NOT NULL,
+    etag character varying(64),
+    tuple_id character varying(64),
+    watcher_uri character varying(128),
+    to_uri character varying(128),
+    call_id character varying(64),
+    to_tag character varying(64),
+    from_tag character varying(64),
+    cseq integer,
+    record_route text,
+    contact character varying(128),
+    remote_contact character varying(128),
+    version integer,
+    extra_headers text
+);
+
+
+ALTER TABLE pua OWNER TO facetone;
+
+--
+-- Name: pua_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE pua_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE pua_id_seq OWNER TO facetone;
+
+--
+-- Name: pua_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE pua_id_seq OWNED BY pua.id;
+
+
+--
+-- Name: re_grp; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE re_grp (
+    id integer NOT NULL,
+    reg_exp character varying(128) DEFAULT ''::character varying NOT NULL,
+    group_id integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE re_grp OWNER TO facetone;
+
+--
+-- Name: re_grp_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE re_grp_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE re_grp_id_seq OWNER TO facetone;
+
+--
+-- Name: re_grp_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE re_grp_id_seq OWNED BY re_grp.id;
+
+
+--
+-- Name: registrant; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE registrant (
+    id integer NOT NULL,
+    registrar character varying(128) DEFAULT ''::character varying NOT NULL,
+    proxy character varying(128) DEFAULT NULL::character varying,
+    aor character varying(128) DEFAULT ''::character varying NOT NULL,
+    third_party_registrant character varying(128) DEFAULT NULL::character varying,
+    username character varying(64) DEFAULT NULL::character varying,
+    password character varying(64) DEFAULT NULL::character varying,
+    binding_uri character varying(128) DEFAULT ''::character varying NOT NULL,
+    binding_params character varying(64) DEFAULT NULL::character varying,
+    expiry integer,
+    forced_socket character varying(64) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE registrant OWNER TO facetone;
+
+--
+-- Name: registrant_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE registrant_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE registrant_id_seq OWNER TO facetone;
+
+--
+-- Name: registrant_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE registrant_id_seq OWNED BY registrant.id;
+
+
+--
+-- Name: rls_presentity; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE rls_presentity (
+    id integer NOT NULL,
+    rlsubs_did character varying(255) NOT NULL,
+    resource_uri character varying(128) NOT NULL,
+    content_type character varying(255) NOT NULL,
+    presence_state bytea NOT NULL,
+    expires integer NOT NULL,
+    updated integer NOT NULL,
+    auth_state integer NOT NULL,
+    reason character varying(64) NOT NULL
+);
+
+
+ALTER TABLE rls_presentity OWNER TO facetone;
+
+--
+-- Name: rls_presentity_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE rls_presentity_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE rls_presentity_id_seq OWNER TO facetone;
+
+--
+-- Name: rls_presentity_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE rls_presentity_id_seq OWNED BY rls_presentity.id;
+
+
+--
+-- Name: rls_watchers; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE rls_watchers (
+    id integer NOT NULL,
+    presentity_uri character varying(128) NOT NULL,
+    to_user character varying(64) NOT NULL,
+    to_domain character varying(64) NOT NULL,
+    watcher_username character varying(64) NOT NULL,
+    watcher_domain character varying(64) NOT NULL,
+    event character varying(64) DEFAULT 'presence'::character varying NOT NULL,
+    event_id character varying(64),
+    to_tag character varying(64) NOT NULL,
+    from_tag character varying(64) NOT NULL,
+    callid character varying(64) NOT NULL,
+    local_cseq integer NOT NULL,
+    remote_cseq integer NOT NULL,
+    contact character varying(64) NOT NULL,
+    record_route text,
+    expires integer NOT NULL,
+    status integer DEFAULT 2 NOT NULL,
+    reason character varying(64) NOT NULL,
+    version integer DEFAULT 0 NOT NULL,
+    socket_info character varying(64) NOT NULL,
+    local_contact character varying(128) NOT NULL
+);
+
+
+ALTER TABLE rls_watchers OWNER TO facetone;
+
+--
+-- Name: rls_watchers_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE rls_watchers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE rls_watchers_id_seq OWNER TO facetone;
+
+--
+-- Name: rls_watchers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE rls_watchers_id_seq OWNED BY rls_watchers.id;
+
+
+--
+-- Name: route_tree; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE route_tree (
+    id integer NOT NULL,
+    carrier character varying(64) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE route_tree OWNER TO facetone;
+
+--
+-- Name: route_tree_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE route_tree_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE route_tree_id_seq OWNER TO facetone;
+
+--
+-- Name: route_tree_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE route_tree_id_seq OWNED BY route_tree.id;
+
+
+--
+-- Name: rtpproxy_sockets; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE rtpproxy_sockets (
+    id integer NOT NULL,
+    rtpproxy_sock text NOT NULL,
+    set_id integer NOT NULL
+);
+
+
+ALTER TABLE rtpproxy_sockets OWNER TO facetone;
+
+--
+-- Name: rtpproxy_sockets_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE rtpproxy_sockets_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE rtpproxy_sockets_id_seq OWNER TO facetone;
+
+--
+-- Name: rtpproxy_sockets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE rtpproxy_sockets_id_seq OWNED BY rtpproxy_sockets.id;
+
+
+--
+-- Name: silo; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE silo (
+    id integer NOT NULL,
+    src_addr character varying(128) DEFAULT ''::character varying NOT NULL,
+    dst_addr character varying(128) DEFAULT ''::character varying NOT NULL,
+    username character varying(64) DEFAULT ''::character varying NOT NULL,
+    domain character varying(64) DEFAULT ''::character varying NOT NULL,
+    inc_time integer DEFAULT 0 NOT NULL,
+    exp_time integer DEFAULT 0 NOT NULL,
+    snd_time integer DEFAULT 0 NOT NULL,
+    ctype character varying(255) DEFAULT NULL::character varying,
+    body bytea
+);
+
+
+ALTER TABLE silo OWNER TO facetone;
+
+--
+-- Name: silo_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE silo_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE silo_id_seq OWNER TO facetone;
+
+--
+-- Name: silo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE silo_id_seq OWNED BY silo.id;
+
+
+--
+-- Name: sip_trace; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE sip_trace (
+    id integer NOT NULL,
+    time_stamp timestamp without time zone DEFAULT '1900-01-01 00:00:01'::timestamp without time zone NOT NULL,
+    callid character varying(255) DEFAULT ''::character varying NOT NULL,
+    trace_attrs character varying(128) DEFAULT NULL::character varying,
+    msg text NOT NULL,
+    method character varying(32) DEFAULT ''::character varying NOT NULL,
+    status character varying(128) DEFAULT NULL::character varying,
+    from_proto character varying(5) NOT NULL,
+    from_ip character varying(50) DEFAULT ''::character varying NOT NULL,
+    from_port integer NOT NULL,
+    to_proto character varying(5) NOT NULL,
+    to_ip character varying(50) DEFAULT ''::character varying NOT NULL,
+    to_port integer NOT NULL,
+    fromtag character varying(64) DEFAULT ''::character varying NOT NULL,
+    direction character varying(4) DEFAULT ''::character varying NOT NULL
+);
+
+
+ALTER TABLE sip_trace OWNER TO facetone;
+
+--
+-- Name: sip_trace_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE sip_trace_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE sip_trace_id_seq OWNER TO facetone;
+
+--
+-- Name: sip_trace_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE sip_trace_id_seq OWNED BY sip_trace.id;
+
+
+--
+-- Name: speed_dial; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE speed_dial (
+    id integer NOT NULL,
+    username character varying(64) DEFAULT ''::character varying NOT NULL,
+    domain character varying(64) DEFAULT ''::character varying NOT NULL,
+    sd_username character varying(64) DEFAULT ''::character varying NOT NULL,
+    sd_domain character varying(64) DEFAULT ''::character varying NOT NULL,
+    new_uri character varying(128) DEFAULT ''::character varying NOT NULL,
+    fname character varying(64) DEFAULT ''::character varying NOT NULL,
+    lname character varying(64) DEFAULT ''::character varying NOT NULL,
+    description character varying(64) DEFAULT ''::character varying NOT NULL
+);
+
+
+ALTER TABLE speed_dial OWNER TO facetone;
+
+--
+-- Name: speed_dial_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE speed_dial_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE speed_dial_id_seq OWNER TO facetone;
+
+--
+-- Name: speed_dial_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE speed_dial_id_seq OWNED BY speed_dial.id;
+
+
+--
+-- Name: subscriber; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE subscriber (
+    id integer NOT NULL,
+    username character varying(64) DEFAULT ''::character varying NOT NULL,
+    domain character varying(64) DEFAULT ''::character varying NOT NULL,
+    password character varying(25) DEFAULT ''::character varying NOT NULL,
+    email_address character varying(64) DEFAULT ''::character varying NOT NULL,
+    ha1 character varying(64) DEFAULT ''::character varying NOT NULL,
+    ha1b character varying(64) DEFAULT ''::character varying NOT NULL,
+    rpid character varying(64) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE subscriber OWNER TO facetone;
+
+--
+-- Name: subscriber_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE subscriber_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE subscriber_id_seq OWNER TO facetone;
+
+--
+-- Name: subscriber_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE subscriber_id_seq OWNED BY subscriber.id;
+
+
+--
+-- Name: tls_mgm; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE tls_mgm (
+    id character varying(64) NOT NULL,
+    address character varying(64) NOT NULL,
+    type integer NOT NULL,
+    method character varying(16),
+    verify_cert integer,
+    require_cert integer,
+    certificate character varying(255),
+    private_key character varying(255),
+    crl_check_all integer,
+    crl_dir character varying(255),
+    ca_list character varying(255),
+    ca_dir character varying(255),
+    cipher_list character varying(255),
+    dh_params character varying(255),
+    ec_curve character varying(255)
+);
+
+
+ALTER TABLE tls_mgm OWNER TO facetone;
+
+--
+-- Name: uri; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE uri (
+    id integer NOT NULL,
+    username character varying(64) DEFAULT ''::character varying NOT NULL,
+    domain character varying(64) DEFAULT ''::character varying NOT NULL,
+    uri_user character varying(64) DEFAULT ''::character varying NOT NULL,
+    last_modified timestamp without time zone DEFAULT '1900-01-01 00:00:01'::timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE uri OWNER TO facetone;
+
+--
+-- Name: uri_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE uri_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE uri_id_seq OWNER TO facetone;
+
+--
+-- Name: uri_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE uri_id_seq OWNED BY uri.id;
+
+
+--
+-- Name: userblacklist; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE userblacklist (
+    id integer NOT NULL,
+    username character varying(64) DEFAULT ''::character varying NOT NULL,
+    domain character varying(64) DEFAULT ''::character varying NOT NULL,
+    prefix character varying(64) DEFAULT ''::character varying NOT NULL,
+    whitelist smallint DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE userblacklist OWNER TO facetone;
+
+--
+-- Name: userblacklist_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE userblacklist_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE userblacklist_id_seq OWNER TO facetone;
+
+--
+-- Name: userblacklist_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE userblacklist_id_seq OWNED BY userblacklist.id;
+
+
+--
+-- Name: usr_preferences; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE usr_preferences (
+    id integer NOT NULL,
+    uuid character varying(64) DEFAULT ''::character varying NOT NULL,
+    username character varying(128) DEFAULT 0 NOT NULL,
+    domain character varying(64) DEFAULT ''::character varying NOT NULL,
+    attribute character varying(32) DEFAULT ''::character varying NOT NULL,
+    type integer DEFAULT 0 NOT NULL,
+    value character varying(128) DEFAULT ''::character varying NOT NULL,
+    last_modified timestamp without time zone DEFAULT '1900-01-01 00:00:01'::timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE usr_preferences OWNER TO facetone;
+
+--
+-- Name: usr_preferences_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE usr_preferences_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE usr_preferences_id_seq OWNER TO facetone;
+
+--
+-- Name: usr_preferences_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE usr_preferences_id_seq OWNED BY usr_preferences.id;
+
+
+--
+-- Name: version; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE version (
+    table_name character varying(32) NOT NULL,
+    table_version integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE version OWNER TO facetone;
+
+--
+-- Name: watchers; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE watchers (
+    id integer NOT NULL,
+    presentity_uri character varying(128) NOT NULL,
+    watcher_username character varying(64) NOT NULL,
+    watcher_domain character varying(64) NOT NULL,
+    event character varying(64) DEFAULT 'presence'::character varying NOT NULL,
+    status integer NOT NULL,
+    reason character varying(64),
+    inserted_time integer NOT NULL
+);
+
+
+ALTER TABLE watchers OWNER TO facetone;
+
+--
+-- Name: watchers_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE watchers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE watchers_id_seq OWNER TO facetone;
+
+--
+-- Name: watchers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE watchers_id_seq OWNED BY watchers.id;
+
+
+--
+-- Name: xcap; Type: TABLE; Schema: public; Owner: facetone
+--
+
+CREATE TABLE xcap (
+    id integer NOT NULL,
+    username character varying(64) NOT NULL,
+    domain character varying(64) NOT NULL,
+    doc bytea NOT NULL,
+    doc_type integer NOT NULL,
+    etag character varying(64) NOT NULL,
+    source integer NOT NULL,
+    doc_uri character varying(128) NOT NULL,
+    port integer NOT NULL
+);
+
+
+ALTER TABLE xcap OWNER TO facetone;
+
+--
+-- Name: xcap_id_seq; Type: SEQUENCE; Schema: public; Owner: facetone
+--
+
+CREATE SEQUENCE xcap_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE xcap_id_seq OWNER TO facetone;
+
+--
+-- Name: xcap_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facetone
+--
+
+ALTER SEQUENCE xcap_id_seq OWNED BY xcap.id;
+
+
+--
+-- Name: acc id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY acc ALTER COLUMN id SET DEFAULT nextval('acc_id_seq'::regclass);
+
+
+--
+-- Name: active_watchers id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY active_watchers ALTER COLUMN id SET DEFAULT nextval('active_watchers_id_seq'::regclass);
+
+
+--
+-- Name: address id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY address ALTER COLUMN id SET DEFAULT nextval('address_id_seq'::regclass);
+
+
+--
+-- Name: aliases id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY aliases ALTER COLUMN id SET DEFAULT nextval('aliases_id_seq'::regclass);
+
+
+--
+-- Name: b2b_entities id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY b2b_entities ALTER COLUMN id SET DEFAULT nextval('b2b_entities_id_seq'::regclass);
+
+
+--
+-- Name: b2b_logic id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY b2b_logic ALTER COLUMN id SET DEFAULT nextval('b2b_logic_id_seq'::regclass);
+
+
+--
+-- Name: carrierfailureroute id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY carrierfailureroute ALTER COLUMN id SET DEFAULT nextval('carrierfailureroute_id_seq'::regclass);
+
+
+--
+-- Name: carrierroute id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY carrierroute ALTER COLUMN id SET DEFAULT nextval('carrierroute_id_seq'::regclass);
+
+
+--
+-- Name: cc_agents id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY cc_agents ALTER COLUMN id SET DEFAULT nextval('cc_agents_id_seq'::regclass);
+
+
+--
+-- Name: cc_calls id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY cc_calls ALTER COLUMN id SET DEFAULT nextval('cc_calls_id_seq'::regclass);
+
+
+--
+-- Name: cc_cdrs id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY cc_cdrs ALTER COLUMN id SET DEFAULT nextval('cc_cdrs_id_seq'::regclass);
+
+
+--
+-- Name: cc_flows id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY cc_flows ALTER COLUMN id SET DEFAULT nextval('cc_flows_id_seq'::regclass);
+
+
+--
+-- Name: clusterer id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY clusterer ALTER COLUMN id SET DEFAULT nextval('clusterer_id_seq'::regclass);
+
+
+--
+-- Name: cpl id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY cpl ALTER COLUMN id SET DEFAULT nextval('cpl_id_seq'::regclass);
+
+
+--
+-- Name: dbaliases id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dbaliases ALTER COLUMN id SET DEFAULT nextval('dbaliases_id_seq'::regclass);
+
+
+--
+-- Name: dialplan id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dialplan ALTER COLUMN id SET DEFAULT nextval('dialplan_id_seq'::regclass);
+
+
+--
+-- Name: dispatcher id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dispatcher ALTER COLUMN id SET DEFAULT nextval('dispatcher_id_seq'::regclass);
+
+
+--
+-- Name: domain id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY domain ALTER COLUMN id SET DEFAULT nextval('domain_id_seq'::regclass);
+
+
+--
+-- Name: domainpolicy id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY domainpolicy ALTER COLUMN id SET DEFAULT nextval('domainpolicy_id_seq'::regclass);
+
+
+--
+-- Name: dr_carriers id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dr_carriers ALTER COLUMN id SET DEFAULT nextval('dr_carriers_id_seq'::regclass);
+
+
+--
+-- Name: dr_gateways id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dr_gateways ALTER COLUMN id SET DEFAULT nextval('dr_gateways_id_seq'::regclass);
+
+
+--
+-- Name: dr_groups id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dr_groups ALTER COLUMN id SET DEFAULT nextval('dr_groups_id_seq'::regclass);
+
+
+--
+-- Name: dr_partitions id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dr_partitions ALTER COLUMN id SET DEFAULT nextval('dr_partitions_id_seq'::regclass);
+
+
+--
+-- Name: dr_rules ruleid; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dr_rules ALTER COLUMN ruleid SET DEFAULT nextval('dr_rules_ruleid_seq'::regclass);
+
+
+--
+-- Name: emergency_report id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY emergency_report ALTER COLUMN id SET DEFAULT nextval('emergency_report_id_seq'::regclass);
+
+
+--
+-- Name: emergency_routing id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY emergency_routing ALTER COLUMN id SET DEFAULT nextval('emergency_routing_id_seq'::regclass);
+
+
+--
+-- Name: emergency_service_provider id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY emergency_service_provider ALTER COLUMN id SET DEFAULT nextval('emergency_service_provider_id_seq'::regclass);
+
+
+--
+-- Name: fraud_detection ruleid; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY fraud_detection ALTER COLUMN ruleid SET DEFAULT nextval('fraud_detection_ruleid_seq'::regclass);
+
+
+--
+-- Name: globalblacklist id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY globalblacklist ALTER COLUMN id SET DEFAULT nextval('globalblacklist_id_seq'::regclass);
+
+
+--
+-- Name: grp id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY grp ALTER COLUMN id SET DEFAULT nextval('grp_id_seq'::regclass);
+
+
+--
+-- Name: imc_members id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY imc_members ALTER COLUMN id SET DEFAULT nextval('imc_members_id_seq'::regclass);
+
+
+--
+-- Name: imc_rooms id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY imc_rooms ALTER COLUMN id SET DEFAULT nextval('imc_rooms_id_seq'::regclass);
+
+
+--
+-- Name: load_balancer id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY load_balancer ALTER COLUMN id SET DEFAULT nextval('load_balancer_id_seq'::regclass);
+
+
+--
+-- Name: location contact_id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY location ALTER COLUMN contact_id SET DEFAULT nextval('location_contact_id_seq'::regclass);
+
+
+--
+-- Name: missed_calls id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY missed_calls ALTER COLUMN id SET DEFAULT nextval('missed_calls_id_seq'::regclass);
+
+
+--
+-- Name: presentity id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY presentity ALTER COLUMN id SET DEFAULT nextval('presentity_id_seq'::regclass);
+
+
+--
+-- Name: pua id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY pua ALTER COLUMN id SET DEFAULT nextval('pua_id_seq'::regclass);
+
+
+--
+-- Name: re_grp id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY re_grp ALTER COLUMN id SET DEFAULT nextval('re_grp_id_seq'::regclass);
+
+
+--
+-- Name: registrant id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY registrant ALTER COLUMN id SET DEFAULT nextval('registrant_id_seq'::regclass);
+
+
+--
+-- Name: rls_presentity id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY rls_presentity ALTER COLUMN id SET DEFAULT nextval('rls_presentity_id_seq'::regclass);
+
+
+--
+-- Name: rls_watchers id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY rls_watchers ALTER COLUMN id SET DEFAULT nextval('rls_watchers_id_seq'::regclass);
+
+
+--
+-- Name: route_tree id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY route_tree ALTER COLUMN id SET DEFAULT nextval('route_tree_id_seq'::regclass);
+
+
+--
+-- Name: rtpproxy_sockets id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY rtpproxy_sockets ALTER COLUMN id SET DEFAULT nextval('rtpproxy_sockets_id_seq'::regclass);
+
+
+--
+-- Name: silo id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY silo ALTER COLUMN id SET DEFAULT nextval('silo_id_seq'::regclass);
+
+
+--
+-- Name: sip_trace id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY sip_trace ALTER COLUMN id SET DEFAULT nextval('sip_trace_id_seq'::regclass);
+
+
+--
+-- Name: speed_dial id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY speed_dial ALTER COLUMN id SET DEFAULT nextval('speed_dial_id_seq'::regclass);
+
+
+--
+-- Name: subscriber id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY subscriber ALTER COLUMN id SET DEFAULT nextval('subscriber_id_seq'::regclass);
+
+
+--
+-- Name: uri id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY uri ALTER COLUMN id SET DEFAULT nextval('uri_id_seq'::regclass);
+
+
+--
+-- Name: userblacklist id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY userblacklist ALTER COLUMN id SET DEFAULT nextval('userblacklist_id_seq'::regclass);
+
+
+--
+-- Name: usr_preferences id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY usr_preferences ALTER COLUMN id SET DEFAULT nextval('usr_preferences_id_seq'::regclass);
+
+
+--
+-- Name: watchers id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY watchers ALTER COLUMN id SET DEFAULT nextval('watchers_id_seq'::regclass);
+
+
+--
+-- Name: xcap id; Type: DEFAULT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY xcap ALTER COLUMN id SET DEFAULT nextval('xcap_id_seq'::regclass);
+
+
+--
+-- Data for Name: acc; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY acc (id, method, from_tag, to_tag, callid, sip_code, sip_reason, "time", duration, ms_duration, setuptime, created) FROM stdin;
+\.
+
+
+--
+-- Name: acc_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('acc_id_seq', 1, false);
+
+
+--
+-- Data for Name: active_watchers; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY active_watchers (id, presentity_uri, watcher_username, watcher_domain, to_user, to_domain, event, event_id, to_tag, from_tag, callid, local_cseq, remote_cseq, contact, record_route, expires, status, reason, version, socket_info, local_contact) FROM stdin;
+\.
+
+
+--
+-- Name: active_watchers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('active_watchers_id_seq', 1, false);
+
+
+--
+-- Data for Name: address; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY address (id, grp, ip, mask, port, proto, pattern, context_info) FROM stdin;
+\.
+
+
+--
+-- Name: address_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('address_id_seq', 1, false);
+
+
+--
+-- Data for Name: aliases; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY aliases (id, username, domain, contact, received, path, expires, q, callid, cseq, last_modified, flags, cflags, user_agent, socket, methods, sip_instance, attr) FROM stdin;
+\.
+
+
+--
+-- Name: aliases_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('aliases_id_seq', 1, false);
+
+
+--
+-- Data for Name: b2b_entities; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY b2b_entities (id, type, state, ruri, from_uri, to_uri, from_dname, to_dname, tag0, tag1, callid, cseq0, cseq1, contact0, contact1, route0, route1, sockinfo_srv, param, lm, lrc, lic, leg_cseq, leg_route, leg_tag, leg_contact, leg_sockinfo) FROM stdin;
+\.
+
+
+--
+-- Name: b2b_entities_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('b2b_entities_id_seq', 1, false);
+
+
+--
+-- Data for Name: b2b_logic; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY b2b_logic (id, si_key, scenario, sstate, next_sstate, sparam0, sparam1, sparam2, sparam3, sparam4, sdp, lifetime, e1_type, e1_sid, e1_from, e1_to, e1_key, e2_type, e2_sid, e2_from, e2_to, e2_key, e3_type, e3_sid, e3_from, e3_to, e3_key) FROM stdin;
+\.
+
+
+--
+-- Name: b2b_logic_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('b2b_logic_id_seq', 1, false);
+
+
+--
+-- Data for Name: cachedb; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY cachedb (keyname, value, counter, expires) FROM stdin;
+\.
+
+
+--
+-- Data for Name: carrierfailureroute; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY carrierfailureroute (id, carrier, domain, scan_prefix, host_name, reply_code, flags, mask, next_domain, description) FROM stdin;
+\.
+
+
+--
+-- Name: carrierfailureroute_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('carrierfailureroute_id_seq', 1, false);
+
+
+--
+-- Data for Name: carrierroute; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY carrierroute (id, carrier, domain, scan_prefix, flags, mask, prob, strip, rewrite_host, rewrite_prefix, rewrite_suffix, description) FROM stdin;
+\.
+
+
+--
+-- Name: carrierroute_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('carrierroute_id_seq', 1, false);
+
+
+--
+-- Data for Name: cc_agents; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY cc_agents (id, agentid, location, logstate, skills, last_call_end) FROM stdin;
+\.
+
+
+--
+-- Name: cc_agents_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('cc_agents_id_seq', 1, false);
+
+
+--
+-- Data for Name: cc_calls; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY cc_calls (id, state, ig_cback, no_rej, setup_time, eta, last_start, recv_time, caller_dn, caller_un, b2buaid, flow, agent) FROM stdin;
+\.
+
+
+--
+-- Name: cc_calls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('cc_calls_id_seq', 1, false);
+
+
+--
+-- Data for Name: cc_cdrs; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY cc_cdrs (id, caller, received_timestamp, wait_time, pickup_time, talk_time, flow_id, agent_id, call_type, rejected, fstats, cid) FROM stdin;
+\.
+
+
+--
+-- Name: cc_cdrs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('cc_cdrs_id_seq', 1, false);
+
+
+--
+-- Data for Name: cc_flows; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY cc_flows (id, flowid, priority, skill, prependcid, message_welcome, message_queue) FROM stdin;
+\.
+
+
+--
+-- Name: cc_flows_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('cc_flows_id_seq', 1, false);
+
+
+--
+-- Data for Name: clusterer; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY clusterer (id, cluster_id, machine_id, url, state, last_attempt, failed_attempts, no_tries, duration, description) FROM stdin;
+\.
+
+
+--
+-- Name: clusterer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('clusterer_id_seq', 1, false);
+
+
+--
+-- Data for Name: cpl; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY cpl (id, username, domain, cpl_xml, cpl_bin) FROM stdin;
+\.
+
+
+--
+-- Name: cpl_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('cpl_id_seq', 1, false);
+
+
+--
+-- Data for Name: dbaliases; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY dbaliases (id, alias_username, alias_domain, username, domain) FROM stdin;
+\.
+
+
+--
+-- Name: dbaliases_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('dbaliases_id_seq', 1, false);
+
+
+--
+-- Data for Name: dialog; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY dialog (dlg_id, callid, from_uri, from_tag, to_uri, to_tag, mangled_from_uri, mangled_to_uri, caller_cseq, callee_cseq, caller_ping_cseq, callee_ping_cseq, caller_route_set, callee_route_set, caller_contact, callee_contact, caller_sock, callee_sock, state, start_time, timeout, vars, profiles, script_flags, module_flags, flags) FROM stdin;
+\.
+
+
+--
+-- Data for Name: dialplan; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY dialplan (id, dpid, pr, match_op, match_exp, match_flags, subst_exp, repl_exp, timerec, disabled, attrs) FROM stdin;
+\.
+
+
+--
+-- Name: dialplan_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('dialplan_id_seq', 1, false);
+
+
+--
+-- Data for Name: dispatcher; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY dispatcher (id, setid, destination, socket, state, weight, priority, attrs, description) FROM stdin;
+\.
+
+
+--
+-- Name: dispatcher_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('dispatcher_id_seq', 1, false);
+
+
+--
+-- Data for Name: domain; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY domain (id, domain, attrs, last_modified) FROM stdin;
+\.
+
+
+--
+-- Name: domain_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('domain_id_seq', 1, false);
+
+
+--
+-- Data for Name: domainpolicy; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY domainpolicy (id, rule, type, att, val, description) FROM stdin;
+\.
+
+
+--
+-- Name: domainpolicy_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('domainpolicy_id_seq', 1, false);
+
+
+--
+-- Data for Name: dr_carriers; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY dr_carriers (id, carrierid, gwlist, flags, state, attrs, description) FROM stdin;
+\.
+
+
+--
+-- Name: dr_carriers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('dr_carriers_id_seq', 1, false);
+
+
+--
+-- Data for Name: dr_gateways; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY dr_gateways (id, gwid, type, address, strip, pri_prefix, attrs, probe_mode, state, socket, description) FROM stdin;
+\.
+
+
+--
+-- Name: dr_gateways_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('dr_gateways_id_seq', 1, false);
+
+
+--
+-- Data for Name: dr_groups; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY dr_groups (id, username, domain, groupid, description) FROM stdin;
+\.
+
+
+--
+-- Name: dr_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('dr_groups_id_seq', 1, false);
+
+
+--
+-- Data for Name: dr_partitions; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY dr_partitions (id, partition_name, db_url, drd_table, drr_table, drg_table, drc_table, ruri_avp, gw_id_avp, gw_priprefix_avp, gw_sock_avp, rule_id_avp, rule_prefix_avp, carrier_id_avp) FROM stdin;
+\.
+
+
+--
+-- Name: dr_partitions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('dr_partitions_id_seq', 1, false);
+
+
+--
+-- Data for Name: dr_rules; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY dr_rules (ruleid, groupid, prefix, timerec, priority, routeid, gwlist, attrs, description) FROM stdin;
+\.
+
+
+--
+-- Name: dr_rules_ruleid_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('dr_rules_ruleid_seq', 1, false);
+
+
+--
+-- Data for Name: emergency_report; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY emergency_report (id, callid, selectiveroutingid, routingesn, npa, esgwri, lro, vpc_organizationname, vpc_hostname, vpc_timestamp, result, disposition) FROM stdin;
+\.
+
+
+--
+-- Name: emergency_report_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('emergency_report_id_seq', 1, false);
+
+
+--
+-- Data for Name: emergency_routing; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY emergency_routing (id, selectiveroutingid, routingesn, npa, esgwri) FROM stdin;
+\.
+
+
+--
+-- Name: emergency_routing_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('emergency_routing_id_seq', 1, false);
+
+
+--
+-- Data for Name: emergency_service_provider; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY emergency_service_provider (id, organizationname, hostid, nenaid, contact, certuri, nodeip, attribution) FROM stdin;
+\.
+
+
+--
+-- Name: emergency_service_provider_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('emergency_service_provider_id_seq', 1, false);
+
+
+--
+-- Data for Name: fraud_detection; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY fraud_detection (ruleid, profileid, prefix, start_hour, end_hour, daysoftheweek, cpm_warning, cpm_critical, call_duration_warning, call_duration_critical, total_calls_warning, total_calls_critical, concurrent_calls_warning, concurrent_calls_critical, sequential_calls_warning, sequential_calls_critical) FROM stdin;
+\.
+
+
+--
+-- Name: fraud_detection_ruleid_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('fraud_detection_ruleid_seq', 1, false);
+
+
+--
+-- Data for Name: globalblacklist; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY globalblacklist (id, prefix, whitelist, description) FROM stdin;
+\.
+
+
+--
+-- Name: globalblacklist_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('globalblacklist_id_seq', 1, false);
+
+
+--
+-- Data for Name: grp; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY grp (id, username, domain, grp, last_modified) FROM stdin;
+\.
+
+
+--
+-- Name: grp_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('grp_id_seq', 1, false);
+
+
+--
+-- Data for Name: imc_members; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY imc_members (id, username, domain, room, flag) FROM stdin;
+\.
+
+
+--
+-- Name: imc_members_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('imc_members_id_seq', 1, false);
+
+
+--
+-- Data for Name: imc_rooms; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY imc_rooms (id, name, domain, flag) FROM stdin;
+\.
+
+
+--
+-- Name: imc_rooms_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('imc_rooms_id_seq', 1, false);
+
+
+--
+-- Data for Name: load_balancer; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY load_balancer (id, group_id, dst_uri, resources, probe_mode, description) FROM stdin;
+\.
+
+
+--
+-- Name: load_balancer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('load_balancer_id_seq', 1, false);
+
+
+--
+-- Data for Name: location; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY location (contact_id, username, domain, contact, received, path, expires, q, callid, cseq, last_modified, flags, cflags, user_agent, socket, methods, sip_instance, attr) FROM stdin;
+\.
+
+
+--
+-- Name: location_contact_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('location_contact_id_seq', 1, false);
+
+
+--
+-- Data for Name: missed_calls; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY missed_calls (id, method, from_tag, to_tag, callid, sip_code, sip_reason, "time", setuptime, created) FROM stdin;
+\.
+
+
+--
+-- Name: missed_calls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('missed_calls_id_seq', 1, false);
+
+
+--
+-- Data for Name: presentity; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY presentity (id, username, domain, event, etag, expires, received_time, body, extra_hdrs, sender) FROM stdin;
+\.
+
+
+--
+-- Name: presentity_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('presentity_id_seq', 1, false);
+
+
+--
+-- Data for Name: pua; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY pua (id, pres_uri, pres_id, event, expires, desired_expires, flag, etag, tuple_id, watcher_uri, to_uri, call_id, to_tag, from_tag, cseq, record_route, contact, remote_contact, version, extra_headers) FROM stdin;
+\.
+
+
+--
+-- Name: pua_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('pua_id_seq', 1, false);
+
+
+--
+-- Data for Name: re_grp; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY re_grp (id, reg_exp, group_id) FROM stdin;
+\.
+
+
+--
+-- Name: re_grp_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('re_grp_id_seq', 1, false);
+
+
+--
+-- Data for Name: registrant; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY registrant (id, registrar, proxy, aor, third_party_registrant, username, password, binding_uri, binding_params, expiry, forced_socket) FROM stdin;
+\.
+
+
+--
+-- Name: registrant_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('registrant_id_seq', 1, false);
+
+
+--
+-- Data for Name: rls_presentity; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY rls_presentity (id, rlsubs_did, resource_uri, content_type, presence_state, expires, updated, auth_state, reason) FROM stdin;
+\.
+
+
+--
+-- Name: rls_presentity_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('rls_presentity_id_seq', 1, false);
+
+
+--
+-- Data for Name: rls_watchers; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY rls_watchers (id, presentity_uri, to_user, to_domain, watcher_username, watcher_domain, event, event_id, to_tag, from_tag, callid, local_cseq, remote_cseq, contact, record_route, expires, status, reason, version, socket_info, local_contact) FROM stdin;
+\.
+
+
+--
+-- Name: rls_watchers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('rls_watchers_id_seq', 1, false);
+
+
+--
+-- Data for Name: route_tree; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY route_tree (id, carrier) FROM stdin;
+\.
+
+
+--
+-- Name: route_tree_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('route_tree_id_seq', 1, false);
+
+
+--
+-- Data for Name: rtpproxy_sockets; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY rtpproxy_sockets (id, rtpproxy_sock, set_id) FROM stdin;
+\.
+
+
+--
+-- Name: rtpproxy_sockets_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('rtpproxy_sockets_id_seq', 1, false);
+
+
+--
+-- Data for Name: silo; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY silo (id, src_addr, dst_addr, username, domain, inc_time, exp_time, snd_time, ctype, body) FROM stdin;
+\.
+
+
+--
+-- Name: silo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('silo_id_seq', 1, false);
+
+
+--
+-- Data for Name: sip_trace; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY sip_trace (id, time_stamp, callid, trace_attrs, msg, method, status, from_proto, from_ip, from_port, to_proto, to_ip, to_port, fromtag, direction) FROM stdin;
+\.
+
+
+--
+-- Name: sip_trace_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('sip_trace_id_seq', 1, false);
+
+
+--
+-- Data for Name: speed_dial; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY speed_dial (id, username, domain, sd_username, sd_domain, new_uri, fname, lname, description) FROM stdin;
+\.
+
+
+--
+-- Name: speed_dial_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('speed_dial_id_seq', 1, false);
+
+
+--
+-- Data for Name: subscriber; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY subscriber (id, username, domain, password, email_address, ha1, ha1b, rpid) FROM stdin;
+\.
+
+
+--
+-- Name: subscriber_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('subscriber_id_seq', 1, false);
+
+
+--
+-- Data for Name: tls_mgm; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY tls_mgm (id, address, type, method, verify_cert, require_cert, certificate, private_key, crl_check_all, crl_dir, ca_list, ca_dir, cipher_list, dh_params, ec_curve) FROM stdin;
+\.
+
+
+--
+-- Data for Name: uri; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY uri (id, username, domain, uri_user, last_modified) FROM stdin;
+\.
+
+
+--
+-- Name: uri_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('uri_id_seq', 1, false);
+
+
+--
+-- Data for Name: userblacklist; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY userblacklist (id, username, domain, prefix, whitelist) FROM stdin;
+\.
+
+
+--
+-- Name: userblacklist_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('userblacklist_id_seq', 1, false);
+
+
+--
+-- Data for Name: usr_preferences; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY usr_preferences (id, uuid, username, domain, attribute, type, value, last_modified) FROM stdin;
+\.
+
+
+--
+-- Name: usr_preferences_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('usr_preferences_id_seq', 1, false);
+
+
+--
+-- Data for Name: version; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY version (table_name, table_version) FROM stdin;
+acc	7
+missed_calls	5
+domain	3
+grp	3
+re_grp	2
+address	5
+aliases	1009
+location	1011
+silo	6
+dbaliases	2
+uri	2
+rtpproxy_sockets	0
+speed_dial	3
+usr_preferences	3
+subscriber	7
+dialog	10
+dispatcher	7
+dialplan	5
+dr_gateways	6
+dr_rules	3
+dr_carriers	2
+dr_groups	2
+dr_partitions	1
+load_balancer	2
+clusterer	1
+tls_mgm	1
+presentity	5
+active_watchers	11
+watchers	4
+xcap	4
+pua	8
+rls_presentity	1
+rls_watchers	2
+imc_rooms	2
+imc_members	2
+cpl	2
+sip_trace	5
+domainpolicy	3
+carrierroute	3
+carrierfailureroute	2
+route_tree	2
+userblacklist	2
+globalblacklist	2
+b2b_entities	1
+b2b_logic	3
+cachedb	2
+registrant	1
+cc_flows	1
+cc_agents	1
+cc_cdrs	1
+fraud_detection	1
+emergency_routing	1
+emergency_report	1
+emergency_service_provider	1
+\.
+
+
+--
+-- Data for Name: watchers; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY watchers (id, presentity_uri, watcher_username, watcher_domain, event, status, reason, inserted_time) FROM stdin;
+\.
+
+
+--
+-- Name: watchers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('watchers_id_seq', 1, false);
+
+
+--
+-- Data for Name: xcap; Type: TABLE DATA; Schema: public; Owner: facetone
+--
+
+COPY xcap (id, username, domain, doc, doc_type, etag, source, doc_uri, port) FROM stdin;
+\.
+
+
+--
+-- Name: xcap_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facetone
+--
+
+SELECT pg_catalog.setval('xcap_id_seq', 1, false);
+
+
+--
+-- Name: acc acc_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY acc
+    ADD CONSTRAINT acc_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: active_watchers active_watchers_active_watchers_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY active_watchers
+    ADD CONSTRAINT active_watchers_active_watchers_idx UNIQUE (presentity_uri, callid, to_tag, from_tag);
+
+
+--
+-- Name: active_watchers active_watchers_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY active_watchers
+    ADD CONSTRAINT active_watchers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: address address_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY address
+    ADD CONSTRAINT address_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: aliases aliases_alias_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY aliases
+    ADD CONSTRAINT aliases_alias_idx UNIQUE (username, domain, contact, callid);
+
+
+--
+-- Name: aliases aliases_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY aliases
+    ADD CONSTRAINT aliases_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: b2b_entities b2b_entities_b2b_entities_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY b2b_entities
+    ADD CONSTRAINT b2b_entities_b2b_entities_idx UNIQUE (type, tag0, tag1, callid);
+
+
+--
+-- Name: b2b_entities b2b_entities_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY b2b_entities
+    ADD CONSTRAINT b2b_entities_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: b2b_logic b2b_logic_b2b_logic_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY b2b_logic
+    ADD CONSTRAINT b2b_logic_b2b_logic_idx UNIQUE (si_key);
+
+
+--
+-- Name: b2b_logic b2b_logic_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY b2b_logic
+    ADD CONSTRAINT b2b_logic_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cachedb cachedb_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY cachedb
+    ADD CONSTRAINT cachedb_pkey PRIMARY KEY (keyname);
+
+
+--
+-- Name: carrierfailureroute carrierfailureroute_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY carrierfailureroute
+    ADD CONSTRAINT carrierfailureroute_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: carrierroute carrierroute_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY carrierroute
+    ADD CONSTRAINT carrierroute_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cc_agents cc_agents_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY cc_agents
+    ADD CONSTRAINT cc_agents_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cc_agents cc_agents_unique_agentid; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY cc_agents
+    ADD CONSTRAINT cc_agents_unique_agentid UNIQUE (agentid);
+
+
+--
+-- Name: cc_calls cc_calls_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY cc_calls
+    ADD CONSTRAINT cc_calls_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cc_calls cc_calls_unique_id; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY cc_calls
+    ADD CONSTRAINT cc_calls_unique_id UNIQUE (b2buaid);
+
+
+--
+-- Name: cc_cdrs cc_cdrs_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY cc_cdrs
+    ADD CONSTRAINT cc_cdrs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cc_flows cc_flows_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY cc_flows
+    ADD CONSTRAINT cc_flows_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cc_flows cc_flows_unique_flowid; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY cc_flows
+    ADD CONSTRAINT cc_flows_unique_flowid UNIQUE (flowid);
+
+
+--
+-- Name: clusterer clusterer_clusterer_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY clusterer
+    ADD CONSTRAINT clusterer_clusterer_idx UNIQUE (cluster_id, machine_id);
+
+
+--
+-- Name: clusterer clusterer_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY clusterer
+    ADD CONSTRAINT clusterer_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cpl cpl_account_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY cpl
+    ADD CONSTRAINT cpl_account_idx UNIQUE (username, domain);
+
+
+--
+-- Name: cpl cpl_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY cpl
+    ADD CONSTRAINT cpl_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dbaliases dbaliases_alias_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dbaliases
+    ADD CONSTRAINT dbaliases_alias_idx UNIQUE (alias_username, alias_domain);
+
+
+--
+-- Name: dbaliases dbaliases_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dbaliases
+    ADD CONSTRAINT dbaliases_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dialog dialog_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dialog
+    ADD CONSTRAINT dialog_pkey PRIMARY KEY (dlg_id);
+
+
+--
+-- Name: dialplan dialplan_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dialplan
+    ADD CONSTRAINT dialplan_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dispatcher dispatcher_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dispatcher
+    ADD CONSTRAINT dispatcher_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: domain domain_domain_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY domain
+    ADD CONSTRAINT domain_domain_idx UNIQUE (domain);
+
+
+--
+-- Name: domain domain_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY domain
+    ADD CONSTRAINT domain_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: domainpolicy domainpolicy_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY domainpolicy
+    ADD CONSTRAINT domainpolicy_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: domainpolicy domainpolicy_rav_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY domainpolicy
+    ADD CONSTRAINT domainpolicy_rav_idx UNIQUE (rule, att, val);
+
+
+--
+-- Name: dr_carriers dr_carriers_dr_carrier_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dr_carriers
+    ADD CONSTRAINT dr_carriers_dr_carrier_idx UNIQUE (carrierid);
+
+
+--
+-- Name: dr_carriers dr_carriers_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dr_carriers
+    ADD CONSTRAINT dr_carriers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dr_gateways dr_gateways_dr_gw_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dr_gateways
+    ADD CONSTRAINT dr_gateways_dr_gw_idx UNIQUE (gwid);
+
+
+--
+-- Name: dr_gateways dr_gateways_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dr_gateways
+    ADD CONSTRAINT dr_gateways_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dr_groups dr_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dr_groups
+    ADD CONSTRAINT dr_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dr_partitions dr_partitions_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dr_partitions
+    ADD CONSTRAINT dr_partitions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dr_rules dr_rules_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY dr_rules
+    ADD CONSTRAINT dr_rules_pkey PRIMARY KEY (ruleid);
+
+
+--
+-- Name: emergency_report emergency_report_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY emergency_report
+    ADD CONSTRAINT emergency_report_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: emergency_routing emergency_routing_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY emergency_routing
+    ADD CONSTRAINT emergency_routing_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: emergency_service_provider emergency_service_provider_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY emergency_service_provider
+    ADD CONSTRAINT emergency_service_provider_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: fraud_detection fraud_detection_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY fraud_detection
+    ADD CONSTRAINT fraud_detection_pkey PRIMARY KEY (ruleid);
+
+
+--
+-- Name: globalblacklist globalblacklist_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY globalblacklist
+    ADD CONSTRAINT globalblacklist_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: grp grp_account_group_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY grp
+    ADD CONSTRAINT grp_account_group_idx UNIQUE (username, domain, grp);
+
+
+--
+-- Name: grp grp_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY grp
+    ADD CONSTRAINT grp_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: imc_members imc_members_account_room_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY imc_members
+    ADD CONSTRAINT imc_members_account_room_idx UNIQUE (username, domain, room);
+
+
+--
+-- Name: imc_members imc_members_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY imc_members
+    ADD CONSTRAINT imc_members_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: imc_rooms imc_rooms_name_domain_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY imc_rooms
+    ADD CONSTRAINT imc_rooms_name_domain_idx UNIQUE (name, domain);
+
+
+--
+-- Name: imc_rooms imc_rooms_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY imc_rooms
+    ADD CONSTRAINT imc_rooms_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: load_balancer load_balancer_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY load_balancer
+    ADD CONSTRAINT load_balancer_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: location location_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY location
+    ADD CONSTRAINT location_pkey PRIMARY KEY (contact_id);
+
+
+--
+-- Name: missed_calls missed_calls_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY missed_calls
+    ADD CONSTRAINT missed_calls_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: presentity presentity_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY presentity
+    ADD CONSTRAINT presentity_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: presentity presentity_presentity_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY presentity
+    ADD CONSTRAINT presentity_presentity_idx UNIQUE (username, domain, event, etag);
+
+
+--
+-- Name: pua pua_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY pua
+    ADD CONSTRAINT pua_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: re_grp re_grp_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY re_grp
+    ADD CONSTRAINT re_grp_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: registrant registrant_aor_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY registrant
+    ADD CONSTRAINT registrant_aor_idx UNIQUE (aor);
+
+
+--
+-- Name: registrant registrant_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY registrant
+    ADD CONSTRAINT registrant_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: rls_presentity rls_presentity_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY rls_presentity
+    ADD CONSTRAINT rls_presentity_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: rls_presentity rls_presentity_rls_presentity_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY rls_presentity
+    ADD CONSTRAINT rls_presentity_rls_presentity_idx UNIQUE (rlsubs_did, resource_uri);
+
+
+--
+-- Name: rls_watchers rls_watchers_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY rls_watchers
+    ADD CONSTRAINT rls_watchers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: rls_watchers rls_watchers_rls_watcher_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY rls_watchers
+    ADD CONSTRAINT rls_watchers_rls_watcher_idx UNIQUE (presentity_uri, callid, to_tag, from_tag);
+
+
+--
+-- Name: route_tree route_tree_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY route_tree
+    ADD CONSTRAINT route_tree_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: rtpproxy_sockets rtpproxy_sockets_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY rtpproxy_sockets
+    ADD CONSTRAINT rtpproxy_sockets_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: silo silo_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY silo
+    ADD CONSTRAINT silo_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sip_trace sip_trace_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY sip_trace
+    ADD CONSTRAINT sip_trace_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: speed_dial speed_dial_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY speed_dial
+    ADD CONSTRAINT speed_dial_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: speed_dial speed_dial_speed_dial_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY speed_dial
+    ADD CONSTRAINT speed_dial_speed_dial_idx UNIQUE (username, domain, sd_domain, sd_username);
+
+
+--
+-- Name: subscriber subscriber_account_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY subscriber
+    ADD CONSTRAINT subscriber_account_idx UNIQUE (username, domain);
+
+
+--
+-- Name: subscriber subscriber_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY subscriber
+    ADD CONSTRAINT subscriber_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tls_mgm tls_mgm_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY tls_mgm
+    ADD CONSTRAINT tls_mgm_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: uri uri_account_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY uri
+    ADD CONSTRAINT uri_account_idx UNIQUE (username, domain, uri_user);
+
+
+--
+-- Name: uri uri_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY uri
+    ADD CONSTRAINT uri_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: userblacklist userblacklist_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY userblacklist
+    ADD CONSTRAINT userblacklist_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: usr_preferences usr_preferences_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY usr_preferences
+    ADD CONSTRAINT usr_preferences_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: version version_t_name_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY version
+    ADD CONSTRAINT version_t_name_idx UNIQUE (table_name);
+
+
+--
+-- Name: watchers watchers_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY watchers
+    ADD CONSTRAINT watchers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: watchers watchers_watcher_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY watchers
+    ADD CONSTRAINT watchers_watcher_idx UNIQUE (presentity_uri, watcher_username, watcher_domain, event);
+
+
+--
+-- Name: xcap xcap_account_doc_type_idx; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY xcap
+    ADD CONSTRAINT xcap_account_doc_type_idx UNIQUE (username, domain, doc_type, doc_uri);
+
+
+--
+-- Name: xcap xcap_pkey; Type: CONSTRAINT; Schema: public; Owner: facetone
+--
+
+ALTER TABLE ONLY xcap
+    ADD CONSTRAINT xcap_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: acc_callid_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX acc_callid_idx ON acc USING btree (callid);
+
+
+--
+-- Name: b2b_entities_b2b_entities_param; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX b2b_entities_b2b_entities_param ON b2b_entities USING btree (param);
+
+
+--
+-- Name: cc_calls_b2buaid_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX cc_calls_b2buaid_idx ON cc_calls USING btree (b2buaid);
+
+
+--
+-- Name: dbaliases_target_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX dbaliases_target_idx ON dbaliases USING btree (username, domain);
+
+
+--
+-- Name: domainpolicy_rule_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX domainpolicy_rule_idx ON domainpolicy USING btree (rule);
+
+
+--
+-- Name: globalblacklist_globalblacklist_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX globalblacklist_globalblacklist_idx ON globalblacklist USING btree (prefix);
+
+
+--
+-- Name: load_balancer_dsturi_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX load_balancer_dsturi_idx ON load_balancer USING btree (dst_uri);
+
+
+--
+-- Name: missed_calls_callid_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX missed_calls_callid_idx ON missed_calls USING btree (callid);
+
+
+--
+-- Name: pua_del1_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX pua_del1_idx ON pua USING btree (pres_uri, event);
+
+
+--
+-- Name: pua_del2_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX pua_del2_idx ON pua USING btree (expires);
+
+
+--
+-- Name: pua_update_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX pua_update_idx ON pua USING btree (pres_uri, pres_id, flag, event);
+
+
+--
+-- Name: re_grp_group_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX re_grp_group_idx ON re_grp USING btree (group_id);
+
+
+--
+-- Name: rls_presentity_updated_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX rls_presentity_updated_idx ON rls_presentity USING btree (updated);
+
+
+--
+-- Name: silo_account_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX silo_account_idx ON silo USING btree (username, domain);
+
+
+--
+-- Name: sip_trace_callid_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX sip_trace_callid_idx ON sip_trace USING btree (callid);
+
+
+--
+-- Name: sip_trace_date_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX sip_trace_date_idx ON sip_trace USING btree (time_stamp);
+
+
+--
+-- Name: sip_trace_fromip_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX sip_trace_fromip_idx ON sip_trace USING btree (from_ip);
+
+
+--
+-- Name: sip_trace_trace_attrs_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX sip_trace_trace_attrs_idx ON sip_trace USING btree (trace_attrs);
+
+
+--
+-- Name: subscriber_username_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX subscriber_username_idx ON subscriber USING btree (username);
+
+
+--
+-- Name: userblacklist_userblacklist_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX userblacklist_userblacklist_idx ON userblacklist USING btree (username, domain, prefix);
+
+
+--
+-- Name: usr_preferences_ua_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX usr_preferences_ua_idx ON usr_preferences USING btree (uuid, attribute);
+
+
+--
+-- Name: usr_preferences_uda_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX usr_preferences_uda_idx ON usr_preferences USING btree (username, domain, attribute);
+
+
+--
+-- Name: usr_preferences_value_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX usr_preferences_value_idx ON usr_preferences USING btree (value);
+
+
+--
+-- Name: xcap_source_idx; Type: INDEX; Schema: public; Owner: facetone
+--
+
+CREATE INDEX xcap_source_idx ON xcap USING btree (source);
+
+
+--
+-- Name: acc; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE acc TO duos123;
+
+
+--
+-- Name: acc_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE acc_id_seq TO duos123;
+
+
+--
+-- Name: active_watchers; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE active_watchers TO duos123;
+
+
+--
+-- Name: active_watchers_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE active_watchers_id_seq TO duos123;
+
+
+--
+-- Name: address; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE address TO duos123;
+
+
+--
+-- Name: address_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE address_id_seq TO duos123;
+
+
+--
+-- Name: aliases; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE aliases TO duos123;
+
+
+--
+-- Name: aliases_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE aliases_id_seq TO duos123;
+
+
+--
+-- Name: b2b_entities; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE b2b_entities TO duos123;
+
+
+--
+-- Name: b2b_entities_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE b2b_entities_id_seq TO duos123;
+
+
+--
+-- Name: b2b_logic; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE b2b_logic TO duos123;
+
+
+--
+-- Name: b2b_logic_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE b2b_logic_id_seq TO duos123;
+
+
+--
+-- Name: cachedb; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE cachedb TO duos123;
+
+
+--
+-- Name: carrierfailureroute; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE carrierfailureroute TO duos123;
+
+
+--
+-- Name: carrierfailureroute_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE carrierfailureroute_id_seq TO duos123;
+
+
+--
+-- Name: carrierroute; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE carrierroute TO duos123;
+
+
+--
+-- Name: carrierroute_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE carrierroute_id_seq TO duos123;
+
+
+--
+-- Name: cc_agents; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE cc_agents TO duos123;
+
+
+--
+-- Name: cc_agents_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE cc_agents_id_seq TO duos123;
+
+
+--
+-- Name: cc_calls; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE cc_calls TO duos123;
+
+
+--
+-- Name: cc_calls_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE cc_calls_id_seq TO duos123;
+
+
+--
+-- Name: cc_cdrs; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE cc_cdrs TO duos123;
+
+
+--
+-- Name: cc_cdrs_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE cc_cdrs_id_seq TO duos123;
+
+
+--
+-- Name: cc_flows; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE cc_flows TO duos123;
+
+
+--
+-- Name: cc_flows_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE cc_flows_id_seq TO duos123;
+
+
+--
+-- Name: clusterer; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE clusterer TO duos123;
+
+
+--
+-- Name: clusterer_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE clusterer_id_seq TO duos123;
+
+
+--
+-- Name: cpl; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE cpl TO duos123;
+
+
+--
+-- Name: cpl_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE cpl_id_seq TO duos123;
+
+
+--
+-- Name: dbaliases; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE dbaliases TO duos123;
+
+
+--
+-- Name: dbaliases_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE dbaliases_id_seq TO duos123;
+
+
+--
+-- Name: dialog; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE dialog TO duos123;
+
+
+--
+-- Name: dialplan; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE dialplan TO duos123;
+
+
+--
+-- Name: dialplan_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE dialplan_id_seq TO duos123;
+
+
+--
+-- Name: dispatcher; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE dispatcher TO duos123;
+
+
+--
+-- Name: dispatcher_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE dispatcher_id_seq TO duos123;
+
+
+--
+-- Name: domain; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE domain TO duos123;
+
+
+--
+-- Name: domain_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE domain_id_seq TO duos123;
+
+
+--
+-- Name: domainpolicy; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE domainpolicy TO duos123;
+
+
+--
+-- Name: domainpolicy_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE domainpolicy_id_seq TO duos123;
+
+
+--
+-- Name: dr_carriers; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE dr_carriers TO duos123;
+
+
+--
+-- Name: dr_carriers_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE dr_carriers_id_seq TO duos123;
+
+
+--
+-- Name: dr_gateways; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE dr_gateways TO duos123;
+
+
+--
+-- Name: dr_gateways_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE dr_gateways_id_seq TO duos123;
+
+
+--
+-- Name: dr_groups; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE dr_groups TO duos123;
+
+
+--
+-- Name: dr_groups_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE dr_groups_id_seq TO duos123;
+
+
+--
+-- Name: dr_partitions; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE dr_partitions TO duos123;
+
+
+--
+-- Name: dr_partitions_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE dr_partitions_id_seq TO duos123;
+
+
+--
+-- Name: dr_rules; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE dr_rules TO duos123;
+
+
+--
+-- Name: dr_rules_ruleid_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE dr_rules_ruleid_seq TO duos123;
+
+
+--
+-- Name: emergency_report; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE emergency_report TO duos123;
+
+
+--
+-- Name: emergency_report_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE emergency_report_id_seq TO duos123;
+
+
+--
+-- Name: emergency_routing; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE emergency_routing TO duos123;
+
+
+--
+-- Name: emergency_routing_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE emergency_routing_id_seq TO duos123;
+
+
+--
+-- Name: fraud_detection; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE fraud_detection TO duos123;
+
+
+--
+-- Name: fraud_detection_ruleid_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE fraud_detection_ruleid_seq TO duos123;
+
+
+--
+-- Name: globalblacklist; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE globalblacklist TO duos123;
+
+
+--
+-- Name: globalblacklist_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE globalblacklist_id_seq TO duos123;
+
+
+--
+-- Name: grp; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE grp TO duos123;
+
+
+--
+-- Name: grp_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE grp_id_seq TO duos123;
+
+
+--
+-- Name: imc_members; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE imc_members TO duos123;
+
+
+--
+-- Name: imc_members_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE imc_members_id_seq TO duos123;
+
+
+--
+-- Name: imc_rooms; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE imc_rooms TO duos123;
+
+
+--
+-- Name: imc_rooms_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE imc_rooms_id_seq TO duos123;
+
+
+--
+-- Name: load_balancer; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE load_balancer TO duos123;
+
+
+--
+-- Name: load_balancer_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE load_balancer_id_seq TO duos123;
+
+
+--
+-- Name: location; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE location TO duos123;
+
+
+--
+-- Name: missed_calls; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE missed_calls TO duos123;
+
+
+--
+-- Name: missed_calls_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE missed_calls_id_seq TO duos123;
+
+
+--
+-- Name: presentity; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE presentity TO duos123;
+
+
+--
+-- Name: presentity_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE presentity_id_seq TO duos123;
+
+
+--
+-- Name: pua; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE pua TO duos123;
+
+
+--
+-- Name: pua_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE pua_id_seq TO duos123;
+
+
+--
+-- Name: re_grp; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE re_grp TO duos123;
+
+
+--
+-- Name: re_grp_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE re_grp_id_seq TO duos123;
+
+
+--
+-- Name: registrant; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE registrant TO duos123;
+
+
+--
+-- Name: registrant_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE registrant_id_seq TO duos123;
+
+
+--
+-- Name: rls_presentity; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE rls_presentity TO duos123;
+
+
+--
+-- Name: rls_presentity_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE rls_presentity_id_seq TO duos123;
+
+
+--
+-- Name: rls_watchers; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE rls_watchers TO duos123;
+
+
+--
+-- Name: rls_watchers_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE rls_watchers_id_seq TO duos123;
+
+
+--
+-- Name: route_tree; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE route_tree TO duos123;
+
+
+--
+-- Name: rtpproxy_sockets; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE rtpproxy_sockets TO duos123;
+
+
+--
+-- Name: rtpproxy_sockets_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE rtpproxy_sockets_id_seq TO duos123;
+
+
+--
+-- Name: silo; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE silo TO duos123;
+
+
+--
+-- Name: silo_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE silo_id_seq TO duos123;
+
+
+--
+-- Name: sip_trace; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE sip_trace TO duos123;
+
+
+--
+-- Name: sip_trace_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE sip_trace_id_seq TO duos123;
+
+
+--
+-- Name: speed_dial; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE speed_dial TO duos123;
+
+
+--
+-- Name: speed_dial_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE speed_dial_id_seq TO duos123;
+
+
+--
+-- Name: subscriber; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE subscriber TO duos123;
+
+
+--
+-- Name: subscriber_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE subscriber_id_seq TO duos123;
+
+
+--
+-- Name: tls_mgm; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE tls_mgm TO duos123;
+
+
+--
+-- Name: uri; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE uri TO duos123;
+
+
+--
+-- Name: uri_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE uri_id_seq TO duos123;
+
+
+--
+-- Name: userblacklist; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE userblacklist TO duos123;
+
+
+--
+-- Name: userblacklist_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE userblacklist_id_seq TO duos123;
+
+
+--
+-- Name: usr_preferences; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE usr_preferences TO duos123;
+
+
+--
+-- Name: usr_preferences_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE usr_preferences_id_seq TO duos123;
+
+
+--
+-- Name: version; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE version TO duos123;
+
+
+--
+-- Name: watchers; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE watchers TO duos123;
+
+
+--
+-- Name: watchers_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE watchers_id_seq TO duos123;
+
+
+--
+-- Name: xcap; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON TABLE xcap TO duos123;
+
+
+--
+-- Name: xcap_id_seq; Type: ACL; Schema: public; Owner: facetone
+--
+
+GRANT ALL ON SEQUENCE xcap_id_seq TO duos123;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
