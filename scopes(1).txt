@@ -1,0 +1,364 @@
+/* 1 */
+{
+    "_id" : ObjectId("59008ddd8ef913c5096e5492"),
+    "name" : "facetoneowner",
+    "firstname" : "facetone",
+    "lastname" : "PVT LTD",
+    "username" : "facetoneowner",
+    "password" : "$2a$10$nWPLXb4p5wEWvk3g.YRdfOw7d1kAvPuvd45P.1AEaJyv9E0TtZfAe",
+    "multi_login" : true,
+    "phoneNumber" : {
+        "contact" : "0771234567",
+        "type" : "phone",
+        "verified" : true
+    },
+    "email" : {
+        "contact" : "dinusha@duosoftware.com",
+        "type" : "phone",
+        "verified" : true
+    },
+    "user_meta" : {
+        "role" : "superadmin"
+    },
+    "systemuser" : true,
+    "company" : 1,
+    "tenant" : 1,
+    "client_scopes" : [ 
+        {
+            "consoleName" : "OPERATOR_CONSOLE",
+            "_id" : ObjectId("599d0ab7d56cbb000171925c"),
+            "menus" : [ 
+                {
+                    "menuItem" : "TENANTMONITOR",
+                    "_id" : ObjectId("599d0ab7d56cbb000171925d"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "tenant",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }
+            ]
+        }, 
+        {
+            "consoleName" : "AGENT_CONSOLE",
+            "_id" : ObjectId("599d0ab7d56cbb0001719257"),
+            "menus" : []
+        }, 
+        {
+            "consoleName" : "SUPERVISOR_CONSOLE",
+            "_id" : ObjectId("599d0ab7d56cbb0001719258"),
+            "menus" : [ 
+                {
+                    "menuItem" : "BILLING_HISTORY",
+                    "_id" : ObjectId("599d0ab7d56cbb000171925b"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "wallet",
+                            "feature" : "wallet access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CREDIT_MANAGER",
+                    "_id" : ObjectId("599d0ab7d56cbb000171925a"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "wallet",
+                            "feature" : "wallet access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "PACKAGE_MANAGER",
+                    "_id" : ObjectId("599d0ab7d56cbb0001719259"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "organisation",
+                            "feature" : "organisation access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "user_scopes" : [ 
+        {
+            "scope" : "tenant",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "externaluser",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "organisationManage",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "myNavigation",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "userGroup",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "tag",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "codec",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "myUserProfile",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "delete" : true,
+            "write" : true,
+            "scope" : "trunk",
+            "read" : true
+        }, 
+        {
+            "scope" : "callrule",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "limit",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "sysmonitoring",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "scope" : "cluster",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "read" : true,
+            "write" : false,
+            "delete" : false,
+            "scope" : "profile"
+        }, 
+        {
+            "delete" : true,
+            "write" : true,
+            "scope" : "context",
+            "read" : true
+        }, 
+        {
+            "delete" : false,
+            "write" : true,
+            "scope" : "billing",
+            "read" : false
+        }, 
+        {
+            "delete" : true,
+            "write" : true,
+            "scope" : "notification",
+            "read" : true
+        }, 
+        {
+            "scope" : "ardsrequest",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "requestmeta",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "queue",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "requestserver",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "attribute",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "group",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "ardsresource",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "resourcetaskattribute",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "task",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "productivity",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "Shared",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "taskinfo",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "user",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "userProfile",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "organisation",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "scope" : "resource",
+            "read" : true
+        }, 
+        {
+            "scope" : "package",
+            "read" : true
+        }, 
+        {
+            "scope" : "console",
+            "read" : true
+        }, 
+        {
+            "scope" : "userScope",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "userAppScope",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "userMeta",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "userAppMeta",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "client",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "clientScope",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "delete" : true,
+            "write" : true,
+            "scope" : "wallet",
+            "read" : true
+        }
+    ],
+    "contacts" : [],
+    "__v" : 0,
+    "birthday" : ISODate("1989-12-24T00:00:00.000Z"),
+    "gender" : "male",
+    "avatar" : "",
+    "address" : {
+        "number" : "403",
+        "street" : "Galle Road",
+        "city" : "Colombo 03",
+        "province" : "Western",
+        "country" : "Sri Lanka",
+        "zipcode" : "00300"
+    },
+    "verified" : true,
+    "group" : ObjectId("58466e3e9e5db600019768bb"),
+    "locale" : "en",
+    "app_meta" : {
+        "description" : "test2",
+        "priority" : "urgent",
+        "subject" : "test2"
+    },
+    "Active" : true,
+    "security_level" : 1,
+    "allowed_file_categories" : [],
+    "auth_mechanism" : "facetone"
+}
