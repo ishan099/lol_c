@@ -42,3 +42,32 @@ set CallbackReason:SUBSCRIBER_ABSENT NO_ANSWER
 set CallbackReason:UNALLOCATED_NUMBER INVALID_DESTINATION
 set CallbackReason:UNSPECIFIED INVALID_DESTINATION
 set CallbackReason:USER_BUSY USER_BUSY
+
+
+
+
+
+
+ Token URL
+
+https://lolcdc1lbprodint:8243/token
+
+Service URL
+
+https://lolcdc1lbprodint:8243/smartCollectContractView/1.0
+
+Username
+
+lolc.com/duoSoft
+
+Password
+
+duos@123
+
+Client_id
+
+5NlqfPudxjqPJTv2C88M1jXkmIYa
+
+Client_secret
+
+G2oPlFnjKBRfLzkpbU3XqCaccawa
