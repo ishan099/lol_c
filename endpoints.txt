@@ -31,35 +31,14 @@
     }
 }
 
-{
-    "Agent": {
-        "Params": [
-            "CampaignId",
-            "CampaignName",
-            "Reason",
-            "Number",
-            "Agent",
-            "EventType",
-            "ThirdPartyReference",
-            "Reason",
-            "SessionId"
-        ],
-        "Url": "http://lolcdc2xgenuat/SmartCollect/smartapi/call-events?PCODE=events&APPID=459878",
-        "Method": "POST"
-    },
-    "Customer": {
-        "Params": [
-            "CampaignId",
-            "CampaignName",
-            "Reason",
-            "Number",
-            "Agent",
-            "EventType",
-            "ThirdPartyReference",
-            "Reason",
-            "SessionId"
-        ],
-        "Url": "http://lolcdc2xgenuat/SmartCollect/smartapi/call-events?PCODE=events&APPID=459878",
-        "Method": "POST"
-    }
-}
+
+
+
+set CallbackReason:CALL_REJECTED USER_BUSY
+set CallbackReason:NO_ANSWER NO_ANSWER
+set CallbackReason:NO_ROUTE_DESTINATION CALL_REJECTED
+set CallbackReason:NO_USER_RESPONSE NO_ANSWER
+set CallbackReason:SUBSCRIBER_ABSENT NO_ANSWER
+set CallbackReason:UNALLOCATED_NUMBER INVALID_DESTINATION
+set CallbackReason:UNSPECIFIED INVALID_DESTINATION
+set CallbackReason:USER_BUSY USER_BUSY
