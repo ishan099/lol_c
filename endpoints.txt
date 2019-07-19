@@ -30,3 +30,36 @@
         "Method": "POST"
     }
 }
+
+{
+    "Agent": {
+        "Params": [
+            "CampaignId",
+            "CampaignName",
+            "Reason",
+            "Number",
+            "Agent",
+            "EventType",
+            "ThirdPartyReference",
+            "Reason",
+            "SessionId"
+        ],
+        "Url": "http://lolcdc2xgenuat/SmartCollect/smartapi/call-events?PCODE=events&APPID=459878",
+        "Method": "POST"
+    },
+    "Customer": {
+        "Params": [
+            "CampaignId",
+            "CampaignName",
+            "Reason",
+            "Number",
+            "Agent",
+            "EventType",
+            "ThirdPartyReference",
+            "Reason",
+            "SessionId"
+        ],
+        "Url": "http://lolcdc2xgenuat/SmartCollect/smartapi/call-events?PCODE=events&APPID=459878",
+        "Method": "POST"
+    }
+}
