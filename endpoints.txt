@@ -48,26 +48,14 @@ set CallbackReason:USER_BUSY USER_BUSY
 
 
 
- Token URL
+ Token URL: https://lolcdc1lbprodint:8243/token
 
-https://lolcdc1lbprodint:8243/token
+Service URL: https://lolcdc1lbprodint:8243/smartCollectContractView/1.0
 
-Service URL
+Username: lolc.com/duoSoft
 
-https://lolcdc1lbprodint:8243/smartCollectContractView/1.0
+Password: duos@123
 
-Username
+Client_id: 5NlqfPudxjqPJTv2C88M1jXkmIYa
 
-lolc.com/duoSoft
-
-Password
-
-duos@123
-
-Client_id
-
-5NlqfPudxjqPJTv2C88M1jXkmIYa
-
-Client_secret
-
-G2oPlFnjKBRfLzkpbU3XqCaccawa
+Client_secret: G2oPlFnjKBRfLzkpbU3XqCaccawa
