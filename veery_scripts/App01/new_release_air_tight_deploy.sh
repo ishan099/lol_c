@@ -1,0 +1,438 @@
+#!/bin/bash
+
+
+. params.conf
+. enable.conf
+
+DATE=`date +%Y-%m-%d`
+
+IFS=', ' read -r -a array <<< "$DEPLOY";
+
+
+# install services
+
+for index in "${!array[@]}"
+do
+   echo "$index ${array[index]}"
+
+
+SERVICE=${array[index]}
+
+case "$SERVICE" in
+   "dynamicconfigurationgenerator")
+#1
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+   #  mkdir "DVP-DynamicConfigurationGenerator"
+    #  cd DVP-DynamicConfigurationGenerator;
+    # fi
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/dynamicconfigurationgenerator/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_NAME=dynamicconfigurationgenerator" --env="SYS_CALL_RECORD_PATH=$OUTBOUND_RECORDING_PATH" --env="SYS_BILLING_ENABLED=$BILLING_ENABLED" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_REDIS_DB_CONFIG=$REDIS_DB_CONFIG" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD" --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="SYS_FILESERVICE_HOST=fileservice.$FRONTEND" --env="SYS_FILESERVICE_PORT=8812" --env="SYS_FILESERVICE_VERSION=$HOST_VERSION" --env="SYS_DIAMETERCLIENT_HOST=diameterclient.$FRONTEND" --env="SYS_DIAMETERCLIENT_PORT=$LB_PORT" --env="SYS_DIAMETERCLIENT_VERSION=$HOST_VERSION" --env="HOST_DYNAMICCONFIGGEN_PORT=8816" --env="HOST_USE_DASHBOARD_MSG_QUEUE=$DASHBOARD_USE_MSG_QUEUE" --env="HOST_IP=$HOST_IP" --env="HOST_VERSION=$HOST_VERSION" --env="VIRTUAL_HOST=dynamicconfigurationgenerator.*" --env="LB_FRONTEND=dynamicconfigurationgenerator.$FRONTEND" --env="LB_PORT=$LB_PORT" --expose=8816/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name dynamicconfigurationgenerator dynamicconfigurationgenerator:$VERSION_TAG node /usr/local/src/dynamicconfigurationgenerator/app.js;
+ 
+;;
+
+"sipuserendpointservice")
+#23
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+   #if [ ! -d "DVP-SIPUserEndpointService" ]; then
+	   #mkdir "DVP-SIPUserEndpointService"
+      #cd DVP-SIPUserEndpointService;
+      #docker build --build-arg VERSION_TAG=$VERSION_TAG -t "sipuserendpointservice:"$VERSION_TAG .;
+   #fi
+#fi
+
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/sipuserendpointservice/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_REDIS_DB_CONFIG=$REDIS_DB_CONFIG" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="HOST_SIPUSERENDPOINTSERVICE_PORT=8814" --env="HOST_SIPUSERENDPOINTSERVICE_ENCRYPTPASS=$SIPUSER_PWD" --env="HOST_IP=$HOST_IP" --env="HOST_VERSION=$HOST_VERSION" --env="SYS_LBDATABASE_MYSQL_USER=$LBDATABASE_MYSQL_USER" --env="SYS_LBDATABASE_MYSQL_PASSWORD=$LBDATABASE_MYSQL_PASSWORD" --env="SYS_LBDATABASE_HOST=$LBDATABASE_HOST" --env="SYS_LBDATABASE_TYPE=$LBDATABASE_TYPE" --env="SYS_LBMYSQL_PORT=$LBMYSQL_PORT" --env="SYS_LBDATABASE_MYSQL_DB=$LBDATABASE_MYSQL_DB" --env="VIRTUAL_HOST=sipuserendpointservice.*" --env="LB_FRONTEND=sipuserendpointservice.$FRONTEND" --env="LB_PORT=$LB_PORT" --expose=8814/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name sipuserendpointservice sipuserendpointservice:$VERSION_TAG node /usr/local/src/sipuserendpointservice/app.js;
+;;
+
+
+
+ "callbackservice")
+#11
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+#IFS='.' read -ra VER <<< "$GO_VERSION_TAG"
+#if [ ! -d "DVP-CallBackService" ]; then
+	#mkdir "DVP-CallBackService"
+   #cd DVP-CallBackService;
+   #IFS='.' read -ra VER <<< "$GO_VERSION_TAG"
+   #docker build --build-arg MAJOR_VER=${VER[0]} -t "callbackservice:"$GO_VERSION_TAG .;
+#fi
+#fi
+#cd /usr/src/;
+docker run -d -t -i --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$GO_VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="GO_CONFIG_DIR=/go/src/github.com/DuoSoftware/DVP-CallBackService/CallbackServer" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_CALLBACKSERVICE_PORT=8840" --env="HOST_IP=$HOST_IP" --env="HOST_VERSION=$HOST_VERSION" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_REDIS_DB_ARDS=$REDIS_DB_ARDS" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="SYS_CAMPAIGNMANAGER_HOST=campaignmanager.$FRONTEND" --env="SYS_CAMPAIGNMANAGER_NODE_CONFIG_DIR=/usr/local/src/campaignmanager/config" --env="SYS_CAMPAIGNMANAGER_PORT=8827" --env="SYS_DIALER_HOST=dialerapi.$FRONTEND" --env="SYS_DIALER_PORT=8836" --env="VIRTUAL_HOST=callbackservice.*" --env="LB_FRONTEND=callbackservice.$FRONTEND" --env="LB_PORT=$LB_PORT" --expose=8840/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name callbackservice callbackservice:$GO_VERSION_TAG go run *.go;
+
+;;
+
+"cdrprocessor")
+#31
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+ 
+#if [ ! -d "DVP-CDRProcessor" ]; then
+	#mkdir "DVP-CDRProcessor"
+   #cd DVP-CDRProcessor;
+   #docker build --build-arg VERSION_TAG=$VERSION_TAG -t "cdrprocessor:"$VERSION_TAG .;
+#fi
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/cdrprocessor/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_CDRPROCESSOR_PORT=8809" --env="HOST_VERSION=$HOST_VERSION" --env="HOST_SAVE_CDR_MONGO=$SAVE_CDR_MONGO" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_FILESERVICE_HOST=fileservice.$FRONTEND" --env="SYS_FILESERVICE_PORT=$LB_PORT" --env="SYS_FILESERVICE_VERSION=$HOST_VERSION" --env="VIRTUAL_HOST=cdrprocessor.*" --env="LB_FRONTEND=cdrprocessor.$FRONTEND" --env="LB_PORT=$LB_PORT" --expose=8809/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name cdrprocessor cdrprocessor:$VERSION_TAG node --expose-gc /usr/local/src/cdrprocessor/app.js;
+;;
+
+   "resourceservice")
+#2
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+#if [ ! -d "DVP-ResourceService" ]; then
+	#mkdir "DVP-ResourceService"
+   #cd DVP-ResourceService;
+   #docker build --build-arg VERSION_TAG=$VERSION_TAG -t "resourceservice:lolc_new_release" .;
+#fi
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/resourceservice/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_RESOURCESERVICE_PORT=8831" --env="HOST_VERSION=$HOST_VERSION" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_REDIS_DB_ARDS=$REDIS_DB_ARDS" --env="SYS_DASHBOARD_REDIS_HOST=$DASHBOARD_REDIS_HOST" --env="SYS_DASHBOARD_REDIS_PORT=$DASHBOARD_REDIS_PORT" --env="SYS_DASHBOARD_REDIS_PASSWORD=$DASHBOARD_REDIS_PASSWORD" --env="SYS_REDIS_DB_DASHBOARD=$REDIS_DB_DASHBOARD" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="VIRTUAL_HOST=resourceservice.*" --env="LB_FRONTEND=resourceservice.$FRONTEND" --env="LB_PORT=$LB_PORT" --expose=8831/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name resourceservice resourceservice:$VERSION_TAG node /usr/local/src/resourceservice/app.js;
+
+;;
+   "ardsmonitoring")
+#3
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+
+#if [ ! -d "DVP-ARDSMonitoring" ]; then
+	#mkdir "DVP-ARDSMonitoring" 
+   #cd DVP-ARDSMonitoring;
+  # docker build --build-arg VERSION_TAG=$VERSION_TAG -t "ardsmonitoring:"$VERSION_TAG .;
+#fi
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/ardsmonitoring/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_ARDSMONITOR_PORT=8830" --env="HOST_IP=$HOST_IP" --env="HOST_VERSION=$HOST_VERSION" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_REDIS_DB_ARDS=$REDIS_DB_ARDS" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD" --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="SYS_FILESERVICE_HOST=fileservice.$FRONTEND" --env="SYS_FILESERVICE_PORT=8812" --env="SYS_FILESERVICE_VERSION=$HOST_VERSION" --env="SYS_CDRPROCESSOR_HOST=cdrprocessor.$FRONTEND" --env="SYS_CDRPROCESSOR_PORT=8809" --env="SYS_CDRPROCESSOR_VERSION=$HOST_VERSION" --env="SYS_NOTIFICATIONSERVICE_HOST=notificationservice.$FRONTEND" --env="SYS_NOTIFICATIONSERVICE_PORT=8833" --env="SYS_NOTIFICATIONSERVICE_VERSION=$HOST_VERSION" --env="SYS_ARDSLITEROUTINGENGINE_HOST=ardsliteroutingengine.$FRONTEND" --env="SYS_ARDSLITEROUTINGENGINE_PORT=8835" --env="SYS_ARDSLITEROUTINGENGINE_VERSION=$HOST_VERSION" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="VIRTUAL_HOST=ardsmonitoring.*" --env="LB_FRONTEND=ardsmonitoring.$FRONTEND" --env="LB_PORT=$LB_PORT" --expose=8830/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name ardsmonitoring ardsmonitoring:$VERSION_TAG node /usr/local/src/ardsmonitoring/app.js;
+
+;;
+   
+"campaignmanager")
+#9
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+#if [ ! -d "DVP-CampaignManager" ]; then
+  #mkdir "DVP-CampaignManager"
+   #cd DVP-CampaignManager;
+   #docker build --build-arg VERSION_TAG=$VERSION_TAG -t "campaignmanager:"$VERSION_TAG .;
+#fi
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG"  --env="SYS_NOTIFICATIONSERVICE_HOST=notificationservice.app.veery.cloud" --env="SYS_NOTIFICATIONSERVICE_PORT=8089" --env="SYS_NOTIFICATIONSERVICE_VERSION=1.0.0.0" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/campaignmanager/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_CAMPAIGNMANAGER_PORT=8827" --env="HOST_VERSION=$HOST_VERSION" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="VIRTUAL_HOST=campaignmanager.*" --env="LB_FRONTEND=campaignmanager.$FRONTEND" --env="LB_PORT=$LB_PORT" --expose=8827/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name campaignmanager campaignmanager:$VERSION_TAG node /usr/local/src/campaignmanager/app.js;
+
+;;
+
+   
+   "userservice")
+#19
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+ 
+#elif [ $REPOSITORY = "github" ]; then
+#if [ ! -d "DVP-UserService" ]; then
+	#mkdir "DVP-UserService"
+   #cd DVP-UserService;
+   #docker build --build-arg VERSION_TAG=$VERSION_TAG -t "userservice":$VERSION_TAG .;
+#fi
+#fi
+#cd /usr/src/;
+
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="SYS_AUTH_MULTI_LOGIN=$SYS_AUTH_MULTI_LOGIN" --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env='NODE_CONFIG_DIR=/usr/local/src/userservice/config' --env="EXTERNAL_PROFILE_SEARCH=$EXTERNAL_PROFILE_SEARCH" --env="HOST_TOKEN=$HOST_TOKEN" --env="ACTIVE_TENANT=$TENANT" --env="HOST_USERSERVICE_PORT=8842" --env="HOST_VERSION=$HOST_VERSION" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="VIRTUAL_HOST=userservice.*" --env="LB_FRONTEND=userservice.$FRONTEND" --env="LB_PORT=$LB_PORT" --env="SYS_RESOURCESERVICE_HOST=resourceservice.$FRONTEND" --env="SYS_RESOURCESERVICE_PORT=8831" --env="SYS_RESOURCESERVICE_VERSION=$HOST_VERSION" --env="SYS_SIPUSERENDPOINTSERVICE_HOST=sipuserendpointservice.$FRONTEND" --env="SYS_SIPUSERENDPOINTSERVICE_PORT=8814" --env="SYS_SIPUSERENDPOINTSERVICE_VERSION=$HOST_VERSION" --env="SYS_CLUSTERCONFIG_HOST=clusterconfig.$FRONTEND" --env="SYS_CLUSTERCONFIG_PORT=8805" --env="SYS_CLUSTERCONFIG_VERSION=$HOST_VERSION" --env="FACEBOOK_CLIENT_SECRET=$FACEBOOK_PWD" --env="FOURSQUARE_CLIENT_SECRET=$FOURSQUARE_PWD" --env="GOOGLE_CLIENT_SECRET=$GOOGLE_PWD" --env="GITHUB_CLIENT_SECRET=$GITHUB_PWD" --env="INSTAGRAM_CLIENT_SECRET=$INSTAGRAM_PWD" --env="LINKEDIN_CLIENT_SECRET=$LINKEDIN_PWD" --env="TWITCH_CLIENT_SECRET=$TWITCH_PWD" --env="MICROSOFT_CLIENT_SECRET=$WINDOWS_PWD" --env="YAHOO_CLIENT_SECRET=$YAHOO_PWD" --env="BITBUCKET_CLIENT_SECRET=$BITBUCKET_PWD" --env="SPOTIFY_CLIENT_SECRET=$SPOTIFY_PWD" --env="TWITTER_CLIENT_KEY=$TWITTER_KEY" --env="TWITTER_CLIENT_SECRET=$TWITTER_PWD" --env="LOGIN_VERIFICATION_REQUIRE=$LOGIN_VERIFICATION" --env="SIGNUP_VERIFICATION_REQUIRE=$SIGNUP_VERIFICATION" --env="GOOGLE_RECAPTCHA_KEY=$GOOGLE_RECAPTCHA_KEY" --env="SYS_APP_UI_HOST=$APP_UI_HOST" --env="SYS_BILLINGSERVICE_HOST=billingservice.$FRONTEND" --env="SYS_BILLINGSERVICE_PORT=$LB_PORT" --env="SYS_APP_AGENT_UI_HOST=$APP_AGENT_UI" --env="SYS_BILLINGSERVICE_VERSION=$HOST_VERSION" --env="SYS_RULESERVICE_HOST=ruleservice.$FRONTEND" --env="SYS_RULESERVICE_PORT=$LB_PORT" --env="SYS_RULESERVICE_VERSION=$HOST_VERSION" --env="SYS_FILESERVICE_HOST=fileservice.$FRONTEND" --env="SYS_FILESERVICE_PORT=$LB_PORT" --env="SYS_FILESERVICE_VERSION=$HOST_VERSION" --env="SYS_LITETICKET_HOST=liteticket.$FRONTEND" --env="SYS_LITETICKET_PORT=$LB_PORT" --env="SYS_LITETICKET_VERSION=$HOST_VERSION" --env="HOST_CLUSTER_NAME=$CLUSTER_NAME" --env="HOST_PROVISION_MECHANISM=$PROVISION_MECHANISM" --expose=8842/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name userservice userservice:$VERSION_TAG node /usr/local/src/userservice/app.js
+;;
+
+   "monitorrestapi")
+#20
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+ 
+#elif [ $REPOSITORY = "github" ]; then
+#if [ ! -d "DVP-MonitorRestAPI" ]; then
+	#mkdir "DVP-MonitorRestAPI"
+   #cd DVP-MonitorRestAPI;
+   #docker build --build-arg VERSION_TAG=$VERSION_TAG -t "monitorrestapi":$VERSION_TAG .;
+#fi
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/monitorrestapi/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_VERSION=$HOST_VERSION" --env="HOST_MONITORRESTAPI_PORT=8823" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="VIRTUAL_HOST=monitorrestapi.*" --env="LB_FRONTEND=monitorrestapi.$FRONTEND" --env="LB_PORT=$LB_PORT" --expose=8823/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name monitorrestapi monitorrestapi:$VERSION_TAG node /usr/local/src/monitorrestapi/app.js;
+
+;;
+   "httpprogrammingapi")
+#21-
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+
+#if [ ! -d "DVP-HTTPProgrammingAPI" ]; then
+	#mkdir "DVP-HTTPProgrammingAPI"
+   #cd DVP-HTTPProgrammingAPI;
+   #docker build --build-arg VERSION_TAG=$VERSION_TAG -t "httpprogrammingapi":$VERSION_TAG .;
+#fi
+#fi
+cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/httpprogrammingapi/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="SYS_FREESWITCH_HOST=$FREESWITCH_HOST"  --env="SYS_EVENTSOCKET_PORT=$EVENTSOCKET_PORT" --env="FS_PASSWORD=$FREESWITCH_EVENTSOCKET_PASSWORD" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="SYS_RABBITMQ_VHOST=$RABBITMQ_VHOST" --env="HOST_DVPEVENTS_TYPE=$EVENT_CONSUME_TYPE" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="HOST_HTTPPROGRAMMINGAPI_PORT=8807" --env="SYS_FILESERVICE_HOST=fileservice.$FRONTEND" --env="SYS_FILESERVICE_NODE_CONFIG_DIR=/usr/local/src/fileservice/config" --env="SYS_FILESERVICE_PORT=8812" --env="SYS_FILESERVICE_VERSION=$HOST_VERSION" --env="SYS_DOWNLOAD_FILESERVICE_HOST=fileservice.$FRONTEND" --env="SYS_DOWNLOAD_FILESERVICE_PORT=8812" --env="SYS_DOWNLOAD_FILESERVICE_VERSION=$HOST_VERSION" --env="SYS_RULESERVICE_HOST=ruleservice.$FRONTEND" --env="SYS_RULESERVICE_PORT=8817" --env="SYS_RULESERVICE_VERSION=$HOST_VERSION" --env="SYS_ARDSLITESERVICE_HOST=ardsliteservice.$FRONTEND" --env="SYS_ARDSLITESERVICE_NODE_CONFIG_DIR=/usr/local/src/ardsliteservice/config" --env="SYS_ARDSLITESERVICE_PORT=8828" --env="SYS_QUEUEMUSIC_HOST=queuemusic.$FRONTEND" --env="SYS_QUEUEMUSIC_PORT=8842" --env="SYS_QUEUEMUSIC_VERSION=$HOST_VERSION" --env="SYS_INTERACTION_HOST=interactions.$FRONTEND" --env="SYS_INTERACTION_PORT=8873" --env="SYS_INTERACTION_VERSION=$HOST_VERSION" --env="SYS_TICKET_HOST=liteticket.$FRONTEND" --env="SYS_TICKET_PORT=8872" --env="SYS_TICKET_VERSION=1.0.0.0" --env="VIRTUAL_HOST=httpprogrammingapi.*" --env="HOST_IP=$HOST_IP" --env="HOST_VERSION=$HOST_VERSION" --env="LB_FRONTEND=httpprogrammingapi.$FRONTEND" --env="SYS_CSAT_HOST=csatservice.$FRONTEND" --env="SYS_CSAT_PORT:8883" --env="SYS_CSAT_VERSION=$HOST_VERSION" --env="SYS_USERSERVICE_HOST=userservice.$FRONTEND" --env="SYS_USERSERVICE_VERSION=$HOST_VERSION" --env="SYS_USERSERVICE_PORT=$LB_PORT" --env="LB_PORT=$LB_PORT" --env="HOST_EVENT_CONSUME_TYPE=$EVENT_CONSUME_TYPE" --env="HOST_EVENT_QUEUE=$EVENT_QUEUE" --env="HOST_HTTP_EVENT_QUEUE=$HTTP_EVENT_QUEUE" --expose=8807/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name httpprogrammingapi httpprogrammingapi:$VERSION_TAG node /usr/local/src/httpprogrammingapi/app.js;
+;;
+   
+   
+   "eventmonitor")
+#25
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+#if [ ! -d "DVP-EventMonitor" ]; then
+   #mkdir "DVP-EventMonitor"
+   #cd DVP-EventMonitor;
+   #docker build --build-arg VERSION_TAG=$VERSION_TAG -t "eventmonitor:"$VERSION_TAG .;
+#fi
+#fi
+cd /usr/src/;
+
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="HOST_USE_CDR_GEN=$USE_CDR_GENARATOR" --env="NODE_CONFIG_DIR=/usr/local/src/eventmonitor/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_VERSION=$HOST_VERSION" --env="SYS_BILLING_ENABLED=$BILLING_ENABLED" --env="HOST_EVENTMONITOR_PORT=8806" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_REDIS_DB=$REDIS_DB_PROCESSEDCDR" --env="SYS_REDIS_DB_PROCESSEDCDR=$REDIS_DB_PROCESSEDCDR" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="HOST_EVENT_CONSUME_TYPE=$EVENT_CONSUME_TYPE" --env="SYS_ARDSLITESERVICE_HOST=ardsliteservice.$FRONTEND" --env="SYS_ARDSLITESERVICE_NODE_CONFIG_DIR=/usr/local/src/ardsliteservice/config" --env="SYS_ARDSLITESERVICE_PORT=8828" --env="SYS_ARDSLITESERVICE_VERSION=$HOST_VERSION" --env="SYS_DIAMETERCLIENT_HOST=diameterclient.$FRONTEND" --env="SYS_DIAMETERCLIENT_PORT=$LB_PORT" --env="SYS_DIAMETERCLIENT_VERSION=$HOST_VERSION" --env="SYS_DIALER_HOST=dialerapi.$FRONTEND" --env="HOST_USE_DASHBOARD_MSG_QUEUE=$DASHBOARD_USE_MSG_QUEUE" --env="SYS_DIALER_GO_CONFIG_DIR=/go/src/github.com/DuoSoftware/DVP-DialerAPI/DuoDialer" --env="SYS_DIALER_PORT=8836" --env="SYS_NOTIFICATIONSERVICE_HOST=notificationservice.$FRONTEND" --env="SYS_NOTIFICATIONSERVICE_PORT=8833" --env="SYS_INTERACTIONS_HOST=interactions.$FRONTEND" --env="SYS_INTERACTIONS_VERSION=$HOST_VERSION" --env="SYS_FREESWITCH_HOST=$FREESWITCH_HOST" --env="SYS_FREESWITCH_EVENTSOCKET_PASSWORD=$FREESWITCH_EVENTSOCKET_PASSWORD" --env="SYS_XMLRPC_PORT=$XMLRPC_PORT" --env="SYS_EVENTSOCKET_PORT=$EVENTSOCKET_PORT" --env="VIRTUAL_HOST=eventmonitor.*" --env="LB_FRONTEND=eventmonitor.$FRONTEND" --env="LB_PORT=$LB_PORT" --expose=8806/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name eventmonitor eventmonitor:$VERSION_TAG node /usr/local/src/eventmonitor/app.js;
+;;
+   
+   
+  
+   "dialerapi")
+#29
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+#if [ ! -d "DVP-DialerAPI" ]; then
+   #mkdir "DVP-DialerAPI"
+   #cd DVP-DialerAPI;
+   #IFS='.' read -ra VER <<< "$GO_VERSION_TAG"
+   #docker build -t "dialerapi":$GO_VERSION_TAG .;	
+#fi
+#fi
+#cd /usr/src/;
+docker run -i -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$GO_VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="GO_CONFIG_DIR=/go/src/github.com/DuoSoftware/DVP-DialerAPI/DuoDialer" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_IP=$HOST_IP" --env="HOST_VERSION=$HOST_VERSION" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_REDIS_DB_DIALER=$REDIS_DB_DIALER" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="SYS_DIALER_ID=Dialer2" --env="HOST_DIALER_PORT=8836" --env="SYS_DIALER_CAMP_LIMIT=100" --env="SYS_RULESERVICE_HOST=ruleservice.$FRONTEND" --env="SYS_RULESERVICE_PORT=8817" --env="SYS_CAMPAIGNMANAGER_HOST=campaignmanager.$FRONTEND" --env="SYS_CAMPAIGNMANAGER_PORT=8827" --env="SYS_LIMITHANDLER_HOST=limithandler.$FRONTEND" --env="SYS_LIMITHANDLER_PORT=8815" --env="SYS_CALLBACKSERVICE_HOST=callbackservice.$FRONTEND" --env="SYS_CALLBACKSERVICE_PORT=8840" --env="SYS_ARDSLITESERVICE_HOST=ardsliteservice.$FRONTEND" --env="SYS_ARDSLITESERVICE_PORT=8828" --env="SYS_NOTIFICATIONSERVICE_HOST=notificationservice.$FRONTEND" --env="SYS_NOTIFICATIONSERVICE_PORT=8833" --env="SYS_CLUSTERCONFIGURATION_HOST=clusterconfig.$FRONTEND" --env="SYS_CLUSTERCONFIGURATION_PORT=8805" --env="SYS_CONTACTBASEDNUMBERDIALINGSERVICE_HOST=contactbasednumberdialingservice.$FRONTEND" --env="SYS_CONTACTBASEDNUMBERDIALINGSERVICE_PORT=80" --env="SYS_FREESWITCH_HOST=$FREESWITCH_HOST" --env="SYS_FS_XMLRPC_PORT=$XMLRPC_PORT" --env="HOST_USE_AMQP_ADAPTER=$USE_DIALLER_AMQP_ADAPTER" --env="VIRTUAL_HOST=dialerapi.*" --env="LB_FRONTEND=dialerapi.$FRONTEND" --env="LB_PORT=$LB_PORT" --expose=8836/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name dialerapi dialerapi:$GO_VERSION_TAG go run *.go;
+;;
+  
+   
+
+   "scheduleworker")
+ #35
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+#if [ ! -d "DVP-ScheduleWorker" ]; then
+   #mkdir "DVP-ScheduleWorker"
+   #cd DVP-ScheduleWorker;
+   #docker build --build-arg VERSION_TAG=$VERSION_TAG -t "scheduleworker:"$VERSION_TAG .;
+#fi
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/scheduleworker/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_SCHEDULEWORKER_PORT=8852" --env="HOST_VERSION=$HOST_VERSION" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="VIRTUAL_HOST=scheduleworker.*" --env="LB_FRONTEND=scheduleworker.$FRONTEND"  --env="LB_PORT=$LB_PORT" --expose=8852/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name scheduleworker scheduleworker:$VERSION_TAG node /usr/local/src/scheduleworker/app.js
+#docker run -d -t
+;;
+
+
+ "smppclient")
+#53
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then 
+#if [ ! -d "DVP-SMPPClient" ]; then
+   #mkdir "DVP-SMPPClient"
+   #cd DVP-SMPPClient;
+   #docker build --build-arg VERSION_TAG=$VERSION_TAG -t "smppclient:"$VERSION_TAG .;  
+#fi
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/smppclient/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_VERSION=$HOST_VERSION" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_RULESERVICE_HOST=$RULESERVICE_HOST" --env="SYS_RULESERVICE_PORT=8817" --env="SYS_RULESERVICE_VERSION=$HOST_VERSION" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="SYS_SMSSERVER_HOST=$SMS_SERVER" --env="SYS_SMSSERVER_PORT=$SMS_PORT" --env="SYS_SMSSERVER_PASSWORD=$SMS_PASSWORD" --env="SYS_SMSSERVER_USER=$SMS_USER" --env="SMS_NUMBER=$SMS_NUMBER" --env="SMS_QUEUE_NAME=SMS_QUEUE" --env="SYS_SMPP_HOST=$SMPP_HOST" --env="SYS_SMPP_PORT=$SMPP_PORT" --env="SYS_SMPP_PASSWORD=$SMPP_PASSWORD" --env="SYS_SMPP_USER=$SMPP_USER" --env="SMS_QUEUE_NAME=$SMS_QUEUE" --env="SYS_RESOURCESERVICE_HOST=resourceservice.$FRONTEND" --env="SYS_RESOURCESERVICE_PORT=8831" --env="SYS_RESOURCESERVICE_VERSION=$HOST_VERSION" --env="SYS_INTERACTIONS_HOST=interactions.$FRONTEND" --env="SYS_INTERACTIONS_PORT=8873" --env="SYS_INTERACTIONS_VERSION=$HOST_VERSION" --env="SYS_SCHEDULEWORKER_HOST=scheduleworker.$FRONTEND" --env="SYS_SCHEDULEWORKER_PORT=8852" --env="SYS_SCHEDULEWORKER_VERSION=$HOST_VERSION" --env="SYS_LITETICKET_HOST=liteticket.$FRONTEND" --env="SYS_LITETICKET_PORT=8872" --env="SYS_LITETICKET_VERSION=$HOST_VERSION" --env="SYS_ARDSLITESERVICE_HOST=ardsliteservice.$FRONTEND" --env="SYS_ARDSLITESERVICE_PORT=8828" --env="SYS_ARDSLITESERVICE_VERSION=$HOST_VERSION" --env="SYS_DYNAMICCONFIGGENERATOR_HOST=dynamicconfigurationgenerator.$FRONTEND" --env="SYS_DYNAMICCONFIGGENERATOR_PORT=8816" --env="SYS_DYNAMICCONFIGGENERATOR_VERSION=$HOST_VERSION" --env="SYS_HTTPROGRAMINGAPI_HOST=httpprogrammingapi.$FRONTEND" --env="SYS_HTTPROGRAMINGAPI_PORT=8807" --env="SYS_HTTPROGRAMINGAPI_VERSION=$HOST_VERSION" --env="VIRTUAL_HOST=smppclient.*" --env="LB_FRONTEND=smppclient.$FRONTEND" --env="LB_PORT=$LB_PORT" --log-opt max-size=10m --log-opt max-file=10 --restart=always --name smppclient smppclient:$VERSION_TAG node /usr/local/src/smppclient/app.js;
+;;
+
+  "cdrengine")
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+#if [ ! -d "DVP-CDREngine" ]; then
+	#mkdir "DVP-CDREngine"
+   #cd DVP-CDREngine;
+   #docker build --build-arg VERSION_TAG=$VERSION_TAG -t "cdrengine:"$VERSION_TAG .;
+#fi
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/cdrengine/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_VERSION=$HOST_VERSION" --env="HOST_CDRENGINE_PORT=8818" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_DB=2" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_REDIS_DB_CONFIG=$REDIS_DB_CONFIG" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="VIRTUAL_HOST=cdrengine.*" --env="LB_FRONTEND=cdrengine.$FRONTEND" --env="LB_PORT=$LB_PORT" --expose=8816/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name cdrengine cdrengine:$VERSION_TAG node /usr/local/src/cdrengine/app.js;
+;;
+  "cdreventlistner")
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+#if [ ! -d "DVP-CDREventListner" ]; then
+	#mkdir "DVP-CDREventListner"
+   #cd DVP-CDREventListner;
+   #docker build --build-arg VERSION_TAG=$VERSION_TAG -t "cdreventlistner:"$VERSION_TAG .;
+#fi
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/cdreventlistner/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_CDREVENTLISTNER_PORT=8816" --env="HOST_VERSION=$HOST_VERSION" --env="HOST_SAVE_CDR_MONGO=$SAVE_CDR_MONGO" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_DB=2" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="VIRTUAL_HOST=cdreventlistner.*" --env="LB_FRONTEND=cdreventlistner.$FRONTEND" --env="LB_PORT=$LB_PORT" --expose=8816/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name cdreventlistner cdreventlistner:$VERSION_TAG node --expose-gc /usr/local/src/cdreventlistner/app.js;
+;;
+ 
+ "contactbasednumberdialingservice")
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+#if [ ! -d "DVP-ContactBasedNumberDialingService" ]; then
+     # mkdir "DVP-ContactBasedNumberDialingService"
+      #cd DVP-ContactBasedNumberDialingService;
+     # docker build --build-arg VERSION_TAG=$VERSION_TAG -t "contactbasednumberdialingservice:"$VERSION_TAG --no-cache .;
+#fi
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/contactbasednumberdialingservice/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_VERSION=$HOST_VERSION" --env="HOST_CONTACTBASEDNUMBERDIALINGSERVICE_PORT=8899" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_NOTIFICATIONSERVICE_HOST=notificationservice.facetone.lolc.lk" --env="SYS_NOTIFICATIONSERVICE_PORT=8089" --env="SYS_NOTIFICATIONSERVICE_VERSION=1.0.0.0" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="VIRTUAL_HOST=contactbasednumberdialingservice.*" --env="LB_FRONTEND=contactbasednumberdialingservice.$FRONTEND" --env="LB_PORT=$LB_PORT" --expose=8899/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name contactbasednumberdialingservice contactbasednumberdialingservice:$VERSION_TAG node /usr/local/src/contactbasednumberdialingservice/app.js;
+;;
+
+ "scheduletaskworker")
+#if [ $REPOSITORY = "local" ]; then
+#cd /usr/src/;
+#if [ ! -d "DVP-ScheduleTaskWorker" ]; then
+     #  mkdir "DVP-ScheduleTaskWorker"
+      # cd DVP-ScheduleTaskWorker;
+   #docker build  --build-arg VERSION_TAG=$VERSION_TAG -t  "scheduletaskworker:"$VERSION_TAG .;
+#fi
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="NODE_CONFIG_DIR=/usr/local/src/scheduletaskworker/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_SCHEDULEWORKER_PORT=8852" --env="HOST_VERSION=$HOST_VERSION" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE"--env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER"--env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD"--env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE"  --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD"  --env="VIRTUAL_HOST=scheduletaskworker.*" --env="LB_FRONTEND=scheduletaskworker.$FRONTEND" --env="LB_PORT=$LB_PORT" --env="SYS_SCHEDULEWORKER_HOST=scheduleworker.$FRONTEND" --expose=8852/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name scheduletaskworker scheduletaskworker:$VERSION_TAG node /usr/local/src/scheduletaskworker/app.js
+
+;;
+"liteticket")
+#33
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+#if [ ! -d "DVP-LiteTicket" ]; then
+	#mkdir "DVP-LiteTicket"
+   #cd DVP-LiteTicket;
+   #docker build --build-arg VERSION_TAG=$VERSION_TAG -t "liteticket:"$VERSION_TAG .;
+#fi
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="LB_FRONTEND=liteticket.$FRONTEND" --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/liteticket/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_LITETICKET_PORT=8872" --env="HOST_VERSION=$HOST_VERSION" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_REDIS_DB_ARDS=$REDIS_DB_ARDS" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="SYS_DASHBOARD_REDIS_HOST=$DASHBOARD_REDIS_HOST" --env="SYS_DASHBOARD_REDIS_PORT=$DASHBOARD_REDIS_PORT" --env="SYS_DASHBOARD_REDIS_PASSWORD=$DASHBOARD_REDIS_PASSWORD" --env="SYS_REDIS_DB_DASHBOARD=$REDIS_DB_DASHBOARD" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="VIRTUAL_HOST=liteticket.*" --env="LB_FRONTEND=liteticket.$FRONTEND"  --env="LB_PORT=$LB_PORT" --env="SYS_RESOURCESERVICE_HOST=resourceservice.$FRONTEND"  --env="SYS_RESOURCESERVICE_PORT=8831" --env="SYS_RESOURCESERVICE_VERSION=$HOST_VERSION" --env="SYS_SIPUSERENDPOINTSERVICE_HOST=sipuserendpointservice.$FRONTEND"  --env="SYS_SIPUSERENDPOINTSERVICE_PORT=8814" --env="SYS_SIPUSERENDPOINTSERVICE_VERSION=$HOST_VERSION" --env="SYS_CLUSTERCONFIG_HOST=clusterconfig.$FRONTEND"  --env="SYS_CLUSTERCONFIG_PORT=8805" --env="SYS_CLUSTERCONFIG_VERSION=$HOST_VERSION" --env="SYS_ARDSLITESERVICE_HOST=ardsliteservice.$FRONTEND"  --env="SYS_ARDSLITESERVICE_PORT=8828" --env="SYS_ARDSLITESERVICE_VERSION=$HOST_VERSION" --env="SYS_NOTIFICATIONSERVICE_HOST=notificationservice.$FRONTEND"  --env="SYS_NOTIFICATIONSERVICE_PORT=8833" --env="SYS_NOTIFICATIONSERVICE_VERSION=$HOST_VERSION" --env="SYS_SCHEDULEWORKER_HOST=scheduleworker.$FRONTEND"  --env="SYS_SCHEDULEWORKER_PORT=8852" --env="SYS_SCHEDULEWORKER_VERSION=$HOST_VERSION" --env="SYS_INTERACTIONS_HOST=interactions.$FRONTEND" --env="SYS_INTERACTIONS_VERSION=$HOST_VERSION" --env="SYS_FILESERVICE_HOST=fileservice.$FRONTEND"  --env="SYS_FILESERVICE_PORT=8812" --env="SYS_FILESERVICE_VERSION=$HOST_VERSION" --env="HOST_USE_DASHBOARD_MSG_QUEUE=$DASHBOARD_USE_MSG_QUEUE" --expose=8872/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name liteticket liteticket:$VERSION_TAG node --expose-gc /usr/local/src/liteticket/app.js
+#docker run -d -t
+
+;;
+
+"mailsender")
+#39
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+ #docker pull $REPOSITORY_IPURL":5000"/"mailsender:"$VERSION_TAG;
+ #docker tag $REPOSITORY_IPURL":5000"/"mailsender:"$VERSION_TAG "mailsender:"$VERSION_TAG;
+ #docker rmi -f $REPOSITORY_IPURL":5000"/"mailsender:"$VERSION_TAG;
+#elif [ $REPOSITORY = "github" ]; then
+#if [ ! -d "DVP-MailSender" ]; then
+  # Control will enter here if $DIRECTORY exists.
+  #git clone -b $VERSION_TAG https://github.com/DuoSoftware/DVP-MailSender.git;
+#fi
+
+#cd DVP-MailSender;
+#docker build --build-arg VERSION_TAG=$VERSION_TAG -t "mailsender:"$VERSION_TAG .;
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/mailsender/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_MAILSENDER_PORT=8878" --env="HOST_VERSION=$HOST_VERSION" --env="HOST_ENABLE_SMTPLISTNER=true" --env="HOST_ENABLE_SMTPSENDER=true" --env="HOST_ENABLE_SMSSENDER=true" --env="HOST_ENABLE_IMAPLISTNER=true" --env="HOST_NAME=mailsender.$FRONTEND" --env="SYS_SERVER_ID=" --env="SYS_CALLBACK_OPTION=GET" --env="SYS_REQUEST_TYPE=CALL" --env="SYS_SERVER_ID=2" --env="SYS_RESOURCE_TYPE=cluster" --env="SYS_EMAIL_QUEUE_NAME=EMAILOUT" --env="SYS_SMS_QUEUE_NAME=SMSOUT" --env="SYS_SMTP_LISTNER=true" --env="SYS_SMTP_SENDER=true" --env="SYS_SMS_SENDER=true" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD" --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="SYS_SMSSERVER_HOST=$SMS_SERVER" --env="SYS_SMSSERVER_PORT=$SMS_PORT" --env="SYS_SMSSERVER_PASSWORD=$SMS_PASSWORD" --env="SYS_SMSSERVER_USER=$SMS_USER" --env="VIRTUAL_HOST=mailsender.*" --env="LB_FRONTEND=mailsender.$FRONTEND" --env="LB_PORT=$LB_PORT" --env="IMAP_USER_NAME=duodemouser@gmail.com" --env="IMAP_PASSWORD=DuoS123456" --env="IMAP_HOST=imap.gmail.com" --env="IMAP_PORT=993" --env="IMAP_SECURITY=true" --env="IMAP_MAILBOX=INBOX" --env="IMAP_SEEN=true" --env="IMAP_COMPANY=103" --env="IMAP_TENAT=1" --env="IMAP_FETCH=true" --env="SYS_SMTP_HOST=$SMTP_HOST" --env="SYS_SMTP_PORT=$SMTP_PORT" --env="SYS_SMTP_USER=$SMTP_USER" --env="SYS_SMTP_PASSWORD=$SMTP_PASSWORD" --env="SYS_RESOURCESERVICE_HOST=resourceservic.$FRONTEND" --env="SYS_RESOURCESERVICE_VERSION=$HOST_VERSION" --env="SYS_FILESERVICE_HOST=fileservice.$FRONTEND" --env="SYS_FILESERVICE_VERSION=$HOST_VERSION" --env="SYS_SCHEDULEWORKER_HOST=scheduleworker.$FRONTEND" --env="SYS_SCHEDULEWORKER_VERSION=$HOST_VERSION" --env="SYS_LITETICKET_HOST=liteticket.$FRONTEND" --env="SYS_LITETICKET_VERSION=$HOST_VERSION" --env="SYS_INTERACTIONS_HOST=interactions.$FRONTEND" --env="SYS_INTERACTIONS_VERSION=$HOST_VERSION" --env="SYS_ARDSLITESERVICE_HOST=ardsliteservice.$FRONTEND" --env="SYS_ARDSLITESERVICE_VERSION=$HOST_VERSION" --expose=8886/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name mailsender mailsender:$VERSION_TAG node /usr/local/src/mailsender/app.js;
+;;
+
+"articleservice")
+
+#cd /usr/src/;
+#if [ ! -d "DVP-ArticleService" ]; then
+       # git clone -b $VERSION_TAG  https://github.com/DuoSoftware/DVP-ArticleService.git
+#fi
+#cd DVP-ArticleService;
+#docker build  --build-arg VERSION_TAG=$VERSION_TAG -t  "articleservice:"$VERSION_TAG  .;
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="NODE_CONFIG_DIR=/usr/local/src/articleservice/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME"  --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE"  --env="HOST_ARTICLESERVICE_PORT=3635" --env="HOST_VERSION=1.0.0.0" --env="HOST_PATH=/usr/local/src/articleservice/config" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD" --env="SYS_MONGO_USER=duo" --env="SYS_REDIS_PORT=$REDIS_PORT" --env=HOST_NAME="articleservice" --env="VIRTUAL_HOST=articleservice.*" --env="LB_FRONTEND=articleservice.$FRONTEND" --env="HOST_VERSION=1.0.0.0" --env="LB_PORT=$LB_PORT" --expose=3635/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name articleservice articleservice:$VERSION_TAG node /usr/local/src/articleservice/app.js
+;;
+
+ "httpprogrammingapi")
+#21-
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+ #docker pull $REPOSITORY_IPURL":5000"/"httpprogrammingapi:"$VERSION_TAG;
+ #docker tag $REPOSITORY_IPURL":5000"/"httpprogrammingapi:"$VERSION_TAG "httpprogrammingapi:"$VERSION_TAG;
+ #docker rmi -f $REPOSITORY_IPURL":5000"/"httpprogrammingapi:"$VERSION_TAG;
+#elif [ $REPOSITORY = "github" ]; then
+#if [ ! -d "DVP-HTTPProgrammingAPI" ]; then
+	#git clone -b $VERSION_TAG https://github.com/DuoSoftware/DVP-HTTPProgrammingAPI.git;
+#fi
+
+#cd DVP-HTTPProgrammingAPI;
+#docker build --build-arg VERSION_TAG=$VERSION_TAG -t "httpprogrammingapi":$VERSION_TAG .;
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/httpprogrammingapi/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="SYS_FREESWITCH_HOST=$FREESWITCH_HOST"  --env="SYS_EVENTSOCKET_PORT=$EVENTSOCKET_PORT" --env="FS_PASSWORD=$FREESWITCH_EVENTSOCKET_PASSWORD" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="SYS_RABBITMQ_VHOST=$RABBITMQ_VHOST" --env="HOST_DVPEVENTS_TYPE=$EVENT_CONSUME_TYPE" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="HOST_HTTPPROGRAMMINGAPI_PORT=8807" --env="SYS_FILESERVICE_HOST=fileservice.$FRONTEND" --env="SYS_FILESERVICE_NODE_CONFIG_DIR=/usr/local/src/fileservice/config" --env="SYS_FILESERVICE_PORT=8812" --env="SYS_FILESERVICE_VERSION=$HOST_VERSION" --env="SYS_DOWNLOAD_FILESERVICE_HOST=fileservice.$FRONTEND" --env="SYS_DOWNLOAD_FILESERVICE_PORT=8812" --env="SYS_DOWNLOAD_FILESERVICE_VERSION=$HOST_VERSION" --env="SYS_RULESERVICE_HOST=ruleservice.$FRONTEND" --env="SYS_RULESERVICE_PORT=8817" --env="SYS_RULESERVICE_VERSION=$HOST_VERSION" --env="SYS_ARDSLITESERVICE_HOST=ardsliteservice.$FRONTEND" --env="SYS_ARDSLITESERVICE_NODE_CONFIG_DIR=/usr/local/src/ardsliteservice/config" --env="SYS_ARDSLITESERVICE_PORT=8828" --env="SYS_QUEUEMUSIC_HOST=queuemusic.$FRONTEND" --env="SYS_QUEUEMUSIC_PORT=8842" --env="SYS_QUEUEMUSIC_VERSION=$HOST_VERSION" --env="SYS_INTERACTION_HOST=interactions.$FRONTEND" --env="SYS_INTERACTION_PORT=8873" --env="SYS_INTERACTION_VERSION=$HOST_VERSION" --env="SYS_TICKET_HOST=liteticket.$FRONTEND" --env="SYS_TICKET_PORT=8872" --env="SYS_TICKET_VERSION=1.0.0.0" --env="VIRTUAL_HOST=httpprogrammingapi.*" --env="HOST_IP=$HOST_IP" --env="HOST_VERSION=$HOST_VERSION" --env="LB_FRONTEND=httpprogrammingapi.$FRONTEND" --env="SYS_CSAT_HOST=csatservice.$FRONTEND" --env="SYS_CSAT_PORT:8883" --env="SYS_CSAT_VERSION=$HOST_VERSION" --env="SYS_USERSERVICE_HOST=userservice.$FRONTEND" --env="SYS_USERSERVICE_VERSION=$HOST_VERSION" --env="SYS_USERSERVICE_PORT=$LB_PORT" --env="LB_PORT=$LB_PORT" --env="HOST_EVENT_CONSUME_TYPE=$EVENT_CONSUME_TYPE" --env="HOST_EVENT_QUEUE=$EVENT_QUEUE" --env="HOST_HTTP_EVENT_QUEUE=$HTTP_EVENT_QUEUE" --expose=8807/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name httpprogrammingapi httpprogrammingapi:$VERSION_TAG node /usr/local/src/httpprogrammingapi/app.js;
+;;
+
+"abandonedcalldialer")
+
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+ #docker pull $REPOSITORY_IPURL":5000"/"abandonedcalldialer:"$VERSION_TAG;
+ #docker tag $REPOSITORY_IPURL":5000"/"abandonedcalldialer:"$VERSION_TAG "abandonedcalldialer:"$VERSION_TAG;
+ #docker rmi -f $REPOSITORY_IPURL":5000"/"abandonedcalldialer:"$VERSION_TAG;
+#elif [ $REPOSITORY = "github" ]; then
+#if [ ! -d "DVP-AbandonedCallDialer" ]; then
+       # git clone -b $VERSION_TAG https://github.com/DuoSoftware/DVP-AbandonedCallDialer.git;
+#fi
+
+#cd DVP-AbandonedCallDialer;
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/abandonedcalldialer/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_ABANDONEDCALLDIALER_PORT=9094" --env="HOST_VERSION=$HOST_VERSION" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_REDIS_DB_ARDS=$REDIS_DB_ARDS" --env="SYS_DASHBOARD_REDIS_HOST=$DASHBOARD_REDIS_HOST" --env="SYS_DASHBOARD_REDIS_PORT=$DASHBOARD_REDIS_PORT" --env="SYS_DASHBOARD_REDIS_PASSWORD=$DASHBOARD_REDIS_PASSWORD" --env="SYS_REDIS_DB_DASHBOARD=$REDIS_DB_DASHBOARD" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="VIRTUAL_HOST=abandonedcalldialer.*" --env="LB_FRONTEND=abandonedcalldialer.$FRONTEND" --env="LB_PORT=$LB_PORT" --env="SYS_CAMPAIGNMANAGER_HOST=campaignmanager.app1.veery.cloud" --env="SYS_CAMPAIGNMANAGER_PORT=4045" --env="SYS_CAMPAIGNMANAGER_VERSION=1.0.0.0" --expose=9094/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name abandonedcalldialer abandonedcalldialer:$VERSION_TAG node /usr/local/src/abandonedcalldialer/app.js;
+
+;;
+"ipmessagingservice")
+#50
+#cd /usr/src/;
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+ #docker pull $REPOSITORY_IPURL":5000"/"ipmessagingservice:"$VERSION_TAG;
+ #docker tag $REPOSITORY_IPURL":5000"/"ipmessagingservice:"$VERSION_TAG "ipmessagingservice:"$VERSION_TAG;
+ #docker rmi -f $REPOSITORY_IPURL":5000"/"ipmessagingservice:"$VERSION_TAG;
+#elif [ $REPOSITORY = "github" ]; then
+#if [ ! -d "DVP-IPMessagingService" ]; then
+  # Control will enter here if $DIRECTORY exists.
+  #git clone -b $VERSION_TAG https://github.com/DuoSoftware/DVP-IPMessagingService.git;
+#fi
+#cd DVP-IPMessagingService;
+#docker build --build-arg VERSION_TAG=$VERSION_TAG -t "ipmessagingservice:"$VERSION_TAG .;
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/ipmessagingservice/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_IPMESSANGERSERVICE_PORT=8887" --env="HOST_VERSION=$HOST_VERSION" --env="HOST_NAME=ipmessagingservice.$FRONTEND" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="VIRTUAL_HOST=ipmessagingservice.*" --env="LB_FRONTEND=ipmessagingservice.$FRONTEND" --env="LB_PORT=$LB_PORT" --env="SYS_INTERACTIONS_HOST=interactions.$FRONTEND" --env="SYS_INTERACTIONS_VERSION=$HOST_VERSION" --env="SYS_INTERACTIONS_PORT=$LB_PORT" --env="SYS_ARDSLITESERVICE_HOST=ardsliteservice.$FRONTEND" --env="SYS_ARDSLITESERVICE_VERSION=$HOST_VERSION" --env="SYS_ARDSLITESERVICE_PORT=$LB_PORT" --expose=8889/tcp -p 8889:8889 --expose=8890/tcp -p 8890:8890 --log-opt max-size=10m --log-opt max-file=10 --restart=always --name ipmessagingservice ipmessagingservice:$VERSION_TAG node /usr/local/src/ipmessagingservice/app.js;
+;;
+
+"abandonedcalldialer")
+
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+ #docker pull $REPOSITORY_IPURL":5000"/"abandonedcalldialer:"$VERSION_TAG;
+ #docker tag $REPOSITORY_IPURL":5000"/"abandonedcalldialer:"$VERSION_TAG "abandonedcalldialer:"$VERSION_TAG;
+ #docker rmi -f $REPOSITORY_IPURL":5000"/"abandonedcalldialer:"$VERSION_TAG;
+#elif [ $REPOSITORY = "github" ]; then
+#if [ ! -d "DVP-AbandonedCallDialer" ]; then
+       # git clone -b $VERSION_TAG https://github.com/DuoSoftware/DVP-AbandonedCallDialer.git;
+#fi
+
+#cd DVP-AbandonedCallDialer;
+#docker build --build-arg VERSION_TAG=$VERSION_TAG -t "abandonedcalldialer:"$VERSION_TAG --no-cache .;
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="512m" -v /etc/localtime:/etc/localtime:ro --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="NODE_CONFIG_DIR=/usr/local/src/abandonedcalldialer/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_ABANDONEDCALLDIALER_PORT=9094" --env="HOST_VERSION=$HOST_VERSION" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_REDIS_DB_ARDS=$REDIS_DB_ARDS" --env="SYS_DASHBOARD_REDIS_HOST=$DASHBOARD_REDIS_HOST" --env="SYS_DASHBOARD_REDIS_PORT=$DASHBOARD_REDIS_PORT" --env="SYS_DASHBOARD_REDIS_PASSWORD=$DASHBOARD_REDIS_PASSWORD" --env="SYS_REDIS_DB_DASHBOARD=$REDIS_DB_DASHBOARD" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="VIRTUAL_HOST=abandonedcalldialer.*" --env="LB_FRONTEND=abandonedcalldialer.$FRONTEND" --env="LB_PORT=$LB_PORT" --env="SYS_CAMPAIGNMANAGER_HOST=campaignmanager.app1.veery.cloud" --env="SYS_CAMPAIGNMANAGER_PORT=4045" --env="SYS_CAMPAIGNMANAGER_VERSION=1.0.0.0" --expose=9094/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name abandonedcalldialer abandonedcalldialer:$VERSION_TAG node /usr/local/src/abandonedcalldialer/app.js;
+;;
+
+ "fileservice")
+#36
+#cd /usr/src/;
+#if [ $REPOSITORY = "local" ]; then
+# docker pull $REPOSITORY_IPURL":5000"/"fileservice:"$VERSION_TAG;
+# docker tag $REPOSITORY_IPURL":5000"/"fileservice:"$VERSION_TAG "fileservice:"$VERSION_TAG;
+# docker rmi -f $REPOSITORY_IPURL":5000"/"fileservice:"$VERSION_TAG;
+#elif [ $REPOSITORY = "github" ]; then
+#if [ ! -d "DVP-FileService" ]; then
+  # Control will enter here if $DIRECTORY exists.
+#  git clone -b $VERSION_TAG https://github.com/DuoSoftware/DVP-FileService.git;
+#fi
+#cd DVP-FileService;
+#docker build --build-arg VERSION_TAG=$VERSION_TAG -t "fileservice:"$VERSION_TAG .;
+#fi
+#cd /usr/src/;
+docker run -d -t --memory="1024m" -v /etc/localtime:/etc/localtime:ro -v $FILE_DIRECTORY_PATH_LOCAL:$FILE_DIRECTORY_PATH --env="SYS_FILE_BASEPATH=$FILE_DIRECTORY_PATH" --env="VERSION_TAG=$VERSION_TAG" --env="COMPOSE_DATE=$DATE" --env="STORAGE_OPTION=$FILE_STORAGE" --env="NODE_CONFIG_DIR=/usr/local/src/fileservice/config" --env="HOST_TOKEN=$HOST_TOKEN" --env="HOST_FILESERVICE_PORT=8812" --env="HOST_VERSION=$HOST_VERSION" --env="SYS_DATABASE_HOST=$DATABASE_HOST" --env="SYS_DATABASE_TYPE=$DATABASE_TYPE" --env="SYS_DATABASE_POSTGRES_USER=$DATABASE_POSTGRES_USER" --env="SYS_DATABASE_POSTGRES_PASSWORD=$DATABASE_POSTGRES_PASSWORD" --env="SYS_SQL_PORT=$SQL_PORT" --env="SYS_REDIS_HOST=$REDIS_HOST" --env="SYS_REDIS_PASSWORD=$REDIS_PASSWORD" --env="SYS_REDIS_PORT=$REDIS_PORT" --env="SYS_REDIS_MODE=$REDIS_MODE" --env="SYS_REDIS_SENTINEL_HOSTS=$REDIS_SENTINEL_HOSTS" --env="SYS_REDIS_SENTINEL_PORT=$REDIS_SENTINEL_PORT" --env="SYS_REDIS_SENTINEL_NAME=$REDIS_SENTINEL_NAME" --env="SYS_MONGO_HOST=$MONGO_HOST" --env="SYS_MONGO_USER=$MONGO_USER" --env="SYS_MONGO_PASSWORD=$MONGO_PASSWORD"  --env="SYS_MONGO_DB=$MONGO_DB" --env="SYS_MONGO_PORT=$MONGO_PORT" --env="SYS_MONGO_REPLICASETNAME=$MONGO_REPLICA_SET_NAME" --env="SYS_RABBITMQ_HOST=$RABBITMQ_HOST" --env="SYS_RABBITMQ_PORT=$RABBITMQ_PORT" --env="SYS_RABBITMQ_USER=$RABBITMQ_USER" --env="SYS_RABBITMQ_PASSWORD=$RABBITMQ_PASSWORD" --env="SYS_COUCH_HOST=$COUCH_HOST" --env="SYS_COUCH_PORT=$COUCH_PORT" --env="VIRTUAL_HOST=fileservice.*" --env="LB_FRONTEND=fileservice.$FRONTEND" --env="LB_PORT=$LB_PORT" --env="CRYPTO_ALGO=$CRYPTO_ALGO" --env="CRYPTO_PASSWORD=$CRYPTO_PASSWORD" --expose=8812/tcp --log-opt max-size=10m --log-opt max-file=10 --restart=always --name fileservice fileservice:$VERSION_TAG node /usr/local/src/fileservice/app.js;
+
+
+esac
+done
