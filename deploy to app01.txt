@@ -1,0 +1,8 @@
+
+Branch=lolc_campaign_release
+dynamicConfigurationgenerator ruleservice liteticket resourceservice eventmonitor notificationservice cdrengine dashboardservice queuemusic contacts eventservice appregistry templates	conference pbxservice limithandler phonenumbertrunkservice eventsink					
+=======================================================================================================================================
+GO Services / branch: lolc_campaign_release
+dashboard,dashboarddataprocessor,ardsliteroutingine
+============================================================================================================================================
+IPMessagingservice				lolc_campaign_releasev2
