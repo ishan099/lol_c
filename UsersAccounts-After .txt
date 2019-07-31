@@ -1,0 +1,718 @@
+{
+    "_id" : ObjectId("5cf10634b5811d00015201bd"),
+    "joined" : ISODate("2019-05-31T10:47:16.273Z"),
+    "user" : "support4",
+    "userref" : ObjectId("5cf10634b5811d00015201bc"),
+    "tenant" : 1,
+    "company" : 6,
+    "user_meta" : {
+        "role" : "agent"
+    },
+    "created_at" : ISODate("2019-05-31T10:47:16.273Z"),
+    "updated_at" : ISODate("2019-05-31T10:50:01.341Z"),
+    "multi_login" : false,
+    "client_scopes" : [ 
+        {
+            "consoleName" : "AGENT_CONSOLE",
+            "_id" : ObjectId("5cf1079db5811d00015201c0"),
+            "menus" : [ 
+                {
+                    "menuItem" : "AGENT_DASHBOARD",
+                    "_id" : ObjectId("5cf10ac6b5811d00015201fc"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "queue",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "dashboardevent",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "dashboardgraph",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "ardsresource",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_PRODUCTIVITY",
+                    "_id" : ObjectId("5cf10aca1b2419000111154d"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "ardsresource",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "productivity",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_WIDGET",
+                    "_id" : ObjectId("5cf10acc1b2419000111154e"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "sysmonitoring",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "Dispatch",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "ardsresource",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "requestmeta",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "template",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "dialer",
+                            "read" : false,
+                            "write" : true,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "breaktype",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "extension",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "agentDialer",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : false
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "DYNAMICFORM",
+                    "_id" : ObjectId("5cf10acfb5811d00015201fd"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "forms",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "MYPROFILE",
+                    "_id" : ObjectId("5cf10ad41b2419000111154f"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "fileservice",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "sipuser",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "contact",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "myUserProfile",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : false
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "NOTICE",
+                    "_id" : ObjectId("5cf10ad81b24190001111550"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "notice",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "NOTIFICATION",
+                    "_id" : ObjectId("5cf10adab5811d00015201fe"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "notification",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "user",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "userProfile",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "userGroup",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "QUALITYASSUARANCE",
+                    "_id" : ObjectId("5cf10ade1b24190001111551"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "qualityassurance",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TICKET",
+                    "_id" : ObjectId("5cf10ae01b24190001111552"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "events",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "integration",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "engagement",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "inbox",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "externalUser",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "userGroup",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "user",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "fileservice",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "ticket",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "tag",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "timer",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "ticketview",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "forms",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "tickettypes",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }, 
+                        {
+                            "scope" : "ticketstatusflow",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TODO",
+                    "_id" : ObjectId("5cf10ae3b5811d00015201ff"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "todo",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "remind",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "KNOWLEDGE_PORTAL",
+                    "_id" : ObjectId("5cf10ae7b5811d0001520200"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "article",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_AGENT_DASHBOARD",
+                    "_id" : ObjectId("5d415b23c5e5120001b8a4b3"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "AgentConsolemenu",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_NEWPROFILE",
+                    "_id" : ObjectId("5d415b26c5e5120001b8a4b4"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "AgentConsolemenu",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_ENGAGEMENTSESSION",
+                    "_id" : ObjectId("5d415b299c90df00011201c4"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "AgentConsolemenu",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_CONTACT_LIST",
+                    "_id" : ObjectId("5d415b2dc5e5120001b8a4b5"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "AgentConsolemenu",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_NOTES",
+                    "_id" : ObjectId("5d415b30c5e5120001b8a4b6"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "AgentConsolemenu",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_TICKETINBOX",
+                    "_id" : ObjectId("5d415b329c90df00011201c5"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "AgentConsolemenu",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_TIMETRACKER",
+                    "_id" : ObjectId("5d415b369c90df00011201c6"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "AgentConsolemenu",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_SOFTPHONE",
+                    "_id" : ObjectId("5d415b39c5e5120001b8a4b7"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "SoftPhone",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_SOFTPHONE_DIALER",
+                    "_id" : ObjectId("5d415b3dc5e5120001b8a4b8"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "AgentConsolemenu",
+                            "read" : true,
+                            "write" : false,
+                            "delete" : false
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "user_scopes" : [ 
+        {
+            "read" : true,
+            "scope" : "myNavigation"
+        }, 
+        {
+            "write" : true,
+            "read" : true,
+            "scope" : "myUserProfile"
+        }, 
+        {
+            "scope" : "queue",
+            "read" : true,
+            "write" : false,
+            "delete" : false
+        }, 
+        {
+            "scope" : "dashboardevent",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "dashboardgraph",
+            "read" : true,
+            "write" : false,
+            "delete" : false
+        }, 
+        {
+            "scope" : "ardsresource",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "productivity",
+            "read" : true,
+            "write" : false,
+            "delete" : false
+        }, 
+        {
+            "scope" : "sysmonitoring",
+            "read" : true,
+            "write" : true,
+            "delete" : false
+        }, 
+        {
+            "scope" : "Dispatch",
+            "read" : true,
+            "write" : true,
+            "delete" : false
+        }, 
+        {
+            "scope" : "requestmeta",
+            "read" : true,
+            "write" : false,
+            "delete" : false
+        }, 
+        {
+            "scope" : "template",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "dialer",
+            "read" : false,
+            "write" : true,
+            "delete" : false
+        }, 
+        {
+            "scope" : "breaktype",
+            "read" : true,
+            "write" : false,
+            "delete" : false
+        }, 
+        {
+            "scope" : "extension",
+            "read" : true,
+            "write" : false,
+            "delete" : false
+        }, 
+        {
+            "scope" : "agentDialer",
+            "read" : true,
+            "write" : true,
+            "delete" : false
+        }, 
+        {
+            "scope" : "forms",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "fileservice",
+            "read" : true,
+            "write" : true,
+            "delete" : false
+        }, 
+        {
+            "scope" : "sipuser",
+            "read" : true,
+            "write" : false,
+            "delete" : false
+        }, 
+        {
+            "scope" : "contact",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "notice",
+            "read" : true,
+            "write" : false,
+            "delete" : false
+        }, 
+        {
+            "scope" : "notification",
+            "read" : true,
+            "write" : true,
+            "delete" : false
+        }, 
+        {
+            "scope" : "user",
+            "read" : true,
+            "write" : false,
+            "delete" : false
+        }, 
+        {
+            "scope" : "userProfile",
+            "read" : true,
+            "write" : false,
+            "delete" : false
+        }, 
+        {
+            "scope" : "userGroup",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "qualityassurance",
+            "read" : true,
+            "write" : false,
+            "delete" : false
+        }, 
+        {
+            "scope" : "events",
+            "read" : true,
+            "write" : false,
+            "delete" : false
+        }, 
+        {
+            "scope" : "integration",
+            "read" : true,
+            "write" : true,
+            "delete" : false
+        }, 
+        {
+            "scope" : "engagement",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "inbox",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "externalUser",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "ticket",
+            "read" : true,
+            "write" : true,
+            "delete" : false
+        }, 
+        {
+            "scope" : "tag",
+            "read" : true,
+            "write" : false,
+            "delete" : false
+        }, 
+        {
+            "scope" : "timer",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "ticketview",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "tickettypes",
+            "read" : true,
+            "write" : false,
+            "delete" : false
+        }, 
+        {
+            "scope" : "ticketstatusflow",
+            "read" : true,
+            "write" : false,
+            "delete" : false
+        }, 
+        {
+            "scope" : "todo",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "remind",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "article",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "AgentConsolemenu",
+            "read" : true,
+            "write" : false,
+            "delete" : false
+        }, 
+        {
+            "scope" : "SoftPhone",
+            "read" : true,
+            "write" : false,
+            "delete" : false
+        }
+    ],
+    "allowed_file_categories" : [],
+    "verified" : true,
+    "active" : true,
+    "__v" : 0,
+    "resource_id" : "375",
+    "veeryaccount" : {
+        "type" : "sip",
+        "verified" : true,
+        "display" : "111",
+        "contact" : "support4@callserver.facetone.lolc.lk"
+    },
+    "allowoutbound" : true,
+    "group" : ObjectId("5b1fa923d7bd7c00019f594e")
+}
