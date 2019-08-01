@@ -1,0 +1,2843 @@
+/* 1 */
+{
+    "_id" : ObjectId("5aa25c23246bd6e0ec0a6467"),
+    "joined" : ISODate("2018-03-09T10:04:19.340Z"),
+    "user" : "facetone@lolc.lk",
+    "userref" : ObjectId("5aa25c23246bd645f00a6465"),
+    "tenant" : 1,
+    "company" : 6,
+    "user_meta" : {
+        "role" : "admin"
+    },
+    "created_at" : ISODate("2018-03-09T10:04:19.340Z"),
+    "updated_at" : ISODate("2018-03-13T09:46:45.016Z"),
+    "multi_login" : true,
+    "client_scopes" : [ 
+        {
+            "consoleName" : "AGENT_CONSOLE",
+            "_id" : ObjectId("5aa25c23246bd6efb20a6479"),
+            "menus" : [ 
+                {
+                    "menuItem" : "AGENT_DASHBOARD",
+                    "_id" : ObjectId("5d19f9843096b70001f9288c"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "queue",
+                            "feature" : "queue configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "dashboardevent",
+                            "feature" : "dashboardevent configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "dashboardgraph",
+                            "feature" : "dashboardgraph configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "ardsresource",
+                            "feature" : "ardsresource configuration access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_PRODUCTIVITY",
+                    "_id" : ObjectId("5d19f9843096b70001f9288d"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "ardsresource",
+                            "feature" : "ardsresource configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "productivity",
+                            "feature" : "productivity configuration access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_WIDGET",
+                    "_id" : ObjectId("5d19f9843096b70001f9288e"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "sysmonitoring",
+                            "feature" : "sysmonitoring configuration access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "Dispatch",
+                            "feature" : "Dispatchaccess",
+                            "write" : true,
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "ardsresource",
+                            "feature" : "ardsresource configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "requestmeta",
+                            "feature" : "requestmeta configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "template",
+                            "feature" : "template access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "dialer",
+                            "feature" : "dialer access",
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "breaktype",
+                            "feature" : "breaktype access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "extension",
+                            "feature" : "extension access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "agentDialer",
+                            "feature" : "agentDialer access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "DYNAMICFORM",
+                    "_id" : ObjectId("5d19f9843096b70001f9288f"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "forms",
+                            "feature" : "forms configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "MYPROFILE",
+                    "_id" : ObjectId("5d19f9843096b70001f92890"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "fileservice",
+                            "feature" : "fileservice access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "sipuser",
+                            "feature" : "sipuser configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "contact",
+                            "feature" : "contact api access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "myUserProfile",
+                            "feature" : "myUserProfile access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "NOTICE",
+                    "_id" : ObjectId("5d19f9843096b70001f92891"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "notice",
+                            "feature" : "notice access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "NOTIFICATION",
+                    "_id" : ObjectId("5d19f9843096b70001f92892"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "notification",
+                            "feature" : "notification access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "user",
+                            "feature" : "user access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "userProfile",
+                            "feature" : "userProfile access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "userGroup",
+                            "feature" : "userGroup access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "QUALITYASSUARANCE",
+                    "_id" : ObjectId("5d19f9843096b70001f92893"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "qualityassurance",
+                            "feature" : "qualityassurance api access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TICKET",
+                    "_id" : ObjectId("5d19f9843096b70001f92894"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "events",
+                            "feature" : "events configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "integration",
+                            "feature" : "integration api access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "engagement",
+                            "feature" : "engagement configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "inbox",
+                            "feature" : "inbox configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "externalUser",
+                            "feature" : "externalUser configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "userGroup",
+                            "feature" : "userGroup configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "user",
+                            "feature" : "user configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "fileservice",
+                            "feature" : "fileservice configuration access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "ticket",
+                            "feature" : "ticket configuration access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "tag",
+                            "feature" : "tag configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "timer",
+                            "feature" : "timer configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "ticketview",
+                            "feature" : "ticketview configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "forms",
+                            "feature" : "forms configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "tickettypes",
+                            "feature" : "tickettypes configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "ticketstatusflow",
+                            "feature" : "ticketstatusflow configuration access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TODO",
+                    "_id" : ObjectId("5d19f9843096b70001f92895"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "todo",
+                            "feature" : "todo list access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "remind",
+                            "feature" : "remind configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "KNOWLEDGE_PORTAL",
+                    "_id" : ObjectId("5d19f9843096b70001f92897"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "article",
+                            "feature" : "article api access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_AGENT_DASHBOARD",
+                    "_id" : ObjectId("5d19f9843096b70001f92898"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "AgentConsolemenu",
+                            "feature" : "AgentConsolemenu",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_NEWPROFILE",
+                    "_id" : ObjectId("5d19f9843096b70001f92899"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "AgentConsolemenu",
+                            "feature" : "AgentConsolemenu",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_ENGAGEMENTSESSION",
+                    "_id" : ObjectId("5d19f9843096b70001f9289a"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "AgentConsolemenu",
+                            "feature" : "AgentConsolemenu",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_CONTACT_LIST",
+                    "_id" : ObjectId("5d19f9843096b70001f9289b"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "AgentConsolemenu",
+                            "feature" : "AgentConsolemenu",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_NOTES",
+                    "_id" : ObjectId("5d19f9843096b70001f9289c"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "AgentConsolemenu",
+                            "feature" : "AgentConsolemenu",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_TICKETINBOX",
+                    "_id" : ObjectId("5d19f9843096b70001f9289d"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "AgentConsolemenu",
+                            "feature" : "AgentConsolemenu",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_TIMETRACKER",
+                    "_id" : ObjectId("5d19f9843096b70001f9289e"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "AgentConsolemenu",
+                            "feature" : "AgentConsolemenu",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_SOFTPHONE",
+                    "_id" : ObjectId("5d19f9843096b70001f9289f"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "SoftPhone",
+                            "feature" : "SoftPhone",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_SOFTPHONE_DIALER",
+                    "_id" : ObjectId("5d19f9843096b70001f928a0"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "AgentConsolemenu",
+                            "feature" : "AgentConsolemenu",
+                            "read" : true
+                        }
+                    ]
+                }
+            ]
+        }, 
+        {
+            "consoleName" : "SUPERVISOR_CONSOLE",
+            "_id" : ObjectId("5aa25c23246bd6eb430a647a"),
+            "menus" : [ 
+                {
+                    "menuItem" : "ABANDONED_CALL_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928a1"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "fileservice",
+                            "feature" : "fileservice access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "cdr",
+                            "feature" : "cdr access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "attribute",
+                            "feature" : "attribute access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "sipuser",
+                            "feature" : "sipuser access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "ACWREPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928a2"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "ardsresource",
+                            "feature" : "ardsresource api access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "cdr",
+                            "feature" : "cdr access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_BREAKS",
+                    "_id" : ObjectId("5d19f9843096b70001f928a3"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "ardsresource",
+                            "feature" : "ardsresource access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_DIALER",
+                    "_id" : ObjectId("5d19f9843096b70001f928a5"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "agentDialer",
+                            "feature" : "agentDialer access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_DIALER_DETAIL_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928a6"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "agentDialer",
+                            "feature" : "agentDialer access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_DIALER_SUMMARY_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928a7"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "agentDialer",
+                            "feature" : "agentDialer access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_PRODUCTIVITY",
+                    "_id" : ObjectId("5d19f9843096b70001f928a8"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "productivity",
+                            "feature" : "productivity configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "ardsresource",
+                            "feature" : "ardsresource configuration access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_PRODUCTIVITY_SUMMARY_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928a9"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "productivity",
+                            "feature" : "productivity access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "ardsresource",
+                            "feature" : "ardsresource access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_SUMMARY",
+                    "_id" : ObjectId("5d19f9843096b70001f928aa"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "ardsresource",
+                            "feature" : "ardsresource access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENTSTATUSEVENT",
+                    "_id" : ObjectId("5d19f9843096b70001f928ab"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "cdr",
+                            "feature" : "cdr access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "ardsresource",
+                            "feature" : "ardsresource access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "breaktype",
+                            "feature" : "breaktype access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "APPLICATIONS",
+                    "_id" : ObjectId("5d19f9843096b70001f928ac"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "fileservice",
+                            "feature" : "fileservice configuration access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "appreg",
+                            "feature" : "appreg configuration access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "ARDS_CONFIGURATION",
+                    "_id" : ObjectId("5d19f9843096b70001f928ad"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "group",
+                            "feature" : "group configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "task",
+                            "feature" : "task configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "requestmeta",
+                            "feature" : "requestmeta configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "requestserver",
+                            "feature" : "requestserver configuration access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "ATTRIBUTES",
+                    "_id" : ObjectId("5d19f9843096b70001f928ae"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "attribute",
+                            "feature" : "attribute configuration access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "group",
+                            "feature" : "group configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AUDITTRAIL",
+                    "_id" : ObjectId("5d19f9843096b70001f928af"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "audittrail",
+                            "feature" : "audittrail access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AUTOATTENDANCE",
+                    "_id" : ObjectId("5d19f9843096b70001f928b0"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "autoattendance",
+                            "feature" : "autoattendance configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CALL_MONITOR",
+                    "_id" : ObjectId("5d19f9843096b70001f928b1"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "sysmonitoring",
+                            "feature" : "sysmonitoring configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "Dispatch",
+                            "feature" : "Dispatch configuration access",
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CALL_SUMMARY_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928b2"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "fileservice",
+                            "feature" : "fileservice access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "cdr",
+                            "feature" : "cdr access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CALLCENTER_PERFORMANCE",
+                    "_id" : ObjectId("5d19f9843096b70001f928b3"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "dashboardevent",
+                            "feature" : "dashboardevent api access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "sysmonitoring",
+                            "feature" : "sysmonitoring configuration access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CAMPAIGN_ATTEMPT_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928b4"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "campaign",
+                            "feature" : "campaign access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CAMPAIGN_CALLBACK_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928b5"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "campaign",
+                            "feature" : "campaign access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CAMPAIGN_CDR",
+                    "_id" : ObjectId("5d19f9843096b70001f928b6"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "cdr",
+                            "feature" : "cdr configuration access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CAMPAIGN_DISPOSITION_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928b7"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "campaign",
+                            "feature" : "campaign access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "campaigncallbackreason",
+                            "feature" : "campaigncallbackreason access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CAMPAIGN_DNCLIST",
+                    "_id" : ObjectId("5d19f9843096b70001f928b8"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "campaigndnc",
+                            "feature" : "campaigndnc access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "campaign",
+                            "feature" : "campaign api access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "campaignnumbers",
+                            "feature" : "campaignnumbers access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "CampaignSchedule",
+                            "feature" : "CampaignSchedule access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "tag",
+                            "feature" : "tag api access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "externalUser",
+                            "feature" : "externalUser api access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CAMPAIGN_MONITOR",
+                    "_id" : ObjectId("5d19f9843096b70001f928b9"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "dialer",
+                            "feature" : "dialer access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "Operations",
+                            "feature" : "Operations access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "campaign",
+                            "feature" : "campaign access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CAMPAIGN_NUMBER_BASE",
+                    "_id" : ObjectId("5d19f9843096b70001f928ba"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "campaignnumbers",
+                            "feature" : "campaignnumbers access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "campaign",
+                            "feature" : "campaign access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "externalUser",
+                            "feature" : "externalUser access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "tag",
+                            "feature" : "tag access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "schedule",
+                            "feature" : "schedule access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CAMPAIGN_SUMMARY_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928bb"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "campaign",
+                            "feature" : "campaign access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CAMPAIGNMANAGER",
+                    "_id" : ObjectId("5d19f9843096b70001f928bc"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "campaign",
+                            "feature" : "campaign api access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "Operations",
+                            "feature" : "Operations access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "campaignconfiguration",
+                            "feature" : "campaignconfiguration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "campaigncallbackreason",
+                            "feature" : "campaigncallbackreason access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "requestmeta",
+                            "feature" : "requestmeta api access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "dialer",
+                            "feature" : "dialer api access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CASE_CONFIGURATION",
+                    "_id" : ObjectId("5d19f9843096b70001f928bd"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "ticket",
+                            "feature" : "ticket access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "tickettypes",
+                            "feature" : "tickettypes access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "tag",
+                            "feature" : "tag access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CASES",
+                    "_id" : ObjectId("5d19f9843096b70001f928be"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "ticket",
+                            "feature" : "ticket access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "tag",
+                            "feature" : "tag access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "ticketstatusflow",
+                            "feature" : "ticketstatusflow access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "requestmeta",
+                            "feature" : "requestmeta access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "externalUser",
+                            "feature" : "externalUser access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "user",
+                            "feature" : "user access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "template",
+                            "feature" : "template access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CDR",
+                    "_id" : ObjectId("5d19f9843096b70001f928bf"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "cdr",
+                            "feature" : "cdr configuration access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "COMPANY_CONFIGURATION",
+                    "_id" : ObjectId("5d19f9843096b70001f928c0"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "context",
+                            "feature" : "context configuration access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "tickettypes",
+                            "feature" : "tickettypes configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "ticketstatusflow",
+                            "feature" : "ticketstatusflow configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "enduser",
+                            "feature" : "enduser configuration access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "cluster",
+                            "feature" : "cluster configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "breaktype",
+                            "feature" : "breaktype access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CONFERENCE",
+                    "_id" : ObjectId("5d19f9843096b70001f928c1"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "extension",
+                            "feature" : "extension access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "conference",
+                            "feature" : "conference access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CREDIT_MANAGER",
+                    "_id" : ObjectId("5d19f9843096b70001f928c2"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "wallet",
+                            "feature" : "wallet access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "CSATREPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928c3"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "csat",
+                            "feature" : "csat api access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "DASHBOARD",
+                    "_id" : ObjectId("5d19f9843096b70001f928c4"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "dashboardevent",
+                            "feature" : "dashboardevent configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "dashboardgraph",
+                            "feature" : "dashboardgraph configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "sysmonitoring",
+                            "feature" : "sysmonitoring configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "ardsresource",
+                            "feature" : "ardsresource configuration access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "DID",
+                    "_id" : ObjectId("5d19f9843096b70001f928c5"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "number",
+                            "feature" : "number configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "extension",
+                            "feature" : "extension configuration access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "DYNAMICFORM",
+                    "_id" : ObjectId("5d19f9843096b70001f928c6"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "forms",
+                            "feature" : "forms configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "EMAIL",
+                    "_id" : ObjectId("5d19f9843096b70001f928c7"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "social",
+                            "feature" : "social access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "tag",
+                            "feature" : "tag access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "EXTENSION",
+                    "_id" : ObjectId("5d19f9843096b70001f928c8"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "extension",
+                            "feature" : "extension configuration access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "FACEBOOK",
+                    "_id" : ObjectId("5d19f9843096b70001f928c9"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "social",
+                            "feature" : "socials configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "FILE_CAT_RESTRICT",
+                    "_id" : ObjectId("5d19f9843096b70001f928ca"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "userfilecategory",
+                            "feature" : "userfilecategory configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "user",
+                            "feature" : "user configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "fileservice",
+                            "feature" : "fileservice configuration access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "FILE_GALLERY",
+                    "_id" : ObjectId("5d19f9843096b70001f928cb"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "fileservice",
+                            "feature" : "fileservice configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "FILE_UPLOAD",
+                    "_id" : ObjectId("5d19f9843096b70001f928cc"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "fileservice",
+                            "feature" : "fileservice configuration access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "HOLD_MUSIC",
+                    "_id" : ObjectId("5d19f9843096b70001f928cd"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "queuemusic",
+                            "feature" : "queuemusic configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "fileservice",
+                            "feature" : "fileservice configuration access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "INTEGRATIONAPI_CONFIGURATION",
+                    "_id" : ObjectId("5d19f9843096b70001f928ce"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "integration",
+                            "feature" : "integration api access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "INVITATIONS",
+                    "_id" : ObjectId("5d19f9843096b70001f928cf"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "user",
+                            "feature" : "user configuration access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "myUserProfile",
+                            "feature" : "myUserProfile configuration access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "IVR_NODE_COUNT_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928d0"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "events",
+                            "feature" : "events access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "appreg",
+                            "feature" : "appreg access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "LimitHandler",
+                    "_id" : ObjectId("5d19f9843096b70001f928d1"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "limit",
+                            "feature" : "limit configuration access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "MISSEDCALLREPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928d2"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "cdr",
+                            "feature" : "cdr access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "ardsresource",
+                            "feature" : "ardsresource api access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "fileservice",
+                            "feature" : "fileservice access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "MY_NUMBERS",
+                    "_id" : ObjectId("5d19f9843096b70001f928d3"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "number",
+                            "feature" : "number configuration access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "trunk",
+                            "feature" : "trunk configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "trunkoperator",
+                            "feature" : "trunkoperator access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "voxbone",
+                            "feature" : "voxbone api access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "limit",
+                            "feature" : "limit configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "callrule",
+                            "feature" : "callrule configuration access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "MYPROFILE",
+                    "_id" : ObjectId("5d19f9843096b70001f928d4"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "sipuser",
+                            "feature" : "sipuser configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "contact",
+                            "feature" : "contact api access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "fileservice",
+                            "feature" : "fileservice access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "myUserProfile",
+                            "feature" : "myUserProfile access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "NOTICE",
+                    "_id" : ObjectId("5d19f9843096b70001f928d5"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "notice",
+                            "feature" : "notice access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "NOTIFICATION",
+                    "_id" : ObjectId("5d19f9843096b70001f928d6"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "notification",
+                            "feature" : "notification access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "user",
+                            "feature" : "user access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "userProfile",
+                            "feature" : "userProfile access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "userGroup",
+                            "feature" : "userGroup access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "PABX_ADMIN",
+                    "_id" : ObjectId("5d19f9843096b70001f928d7"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "sipuser",
+                            "feature" : "sipuser access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "pbxadmin",
+                            "feature" : "pbxadmin access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "PABX_USER",
+                    "_id" : ObjectId("5d19f9843096b70001f928d8"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "pbxadmin",
+                            "feature" : "pbxadmin access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "pbxuser",
+                            "feature" : "pbxuser access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "schedule",
+                            "feature" : "schedule access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "fileservice",
+                            "feature" : "fileservice access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "sipuser",
+                            "feature" : "sipuser access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "PACKAGE_MANAGER",
+                    "_id" : ObjectId("5d19f9843096b70001f928d9"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "organisation",
+                            "feature" : "organisation access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "PHONE_BOOK",
+                    "_id" : ObjectId("5d19f9843096b70001f928da"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "contact",
+                            "feature" : "contact access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "PROFILE",
+                    "_id" : ObjectId("5d19f9843096b70001f928db"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "userProfile",
+                            "feature" : "userProfile access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "sipuser",
+                            "feature" : "sipuser configuration access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "QA_FORM_SUBMISSION",
+                    "_id" : ObjectId("5d19f9843096b70001f928dc"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "qualityassurance",
+                            "feature" : "qualityassurance access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "cdr",
+                            "feature" : "cdr access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "QA_FORM_DESIGNER",
+                    "_id" : ObjectId("5d19f9843096b70001f928dd"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "qualityassurance",
+                            "feature" : "qualityassurance access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "QUALITYASSUARANCE_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928de"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "qualityassurance",
+                            "feature" : "qualityassurance api access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "QUEUE_HOURLY_BREAKDOWN_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928df"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "fileservice",
+                            "feature" : "fileservice access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "cdr",
+                            "feature" : "cdr access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "attribute",
+                            "feature" : "attribute access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "QUEUE_SETTINGS",
+                    "_id" : ObjectId("5d19f9843096b70001f928e0"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "queue",
+                            "feature" : "queue configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "QUEUE_SUMMARY",
+                    "_id" : ObjectId("5d19f9843096b70001f928e1"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "ardsresource",
+                            "feature" : "ardsresource access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "dashboardevent",
+                            "feature" : "dashboardevent access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "dashboardgraph",
+                            "feature" : "dashboardgraph access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "QUEUE_SUMMARY_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928e2"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "queue",
+                            "feature" : "queue access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "REPORT_EMAIL_CONFIG",
+                    "_id" : ObjectId("5d19f9843096b70001f928e3"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "template",
+                            "feature" : "template access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "user",
+                            "feature" : "user access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "cdr",
+                            "feature" : "cdr access",
+                            "write" : true,
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "RESOURCES",
+                    "_id" : ObjectId("5d19f9843096b70001f928e4"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "attribute",
+                            "feature" : "attribute configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "group",
+                            "feature" : "group configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "ardsresource",
+                            "feature" : "ardsresource configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "task",
+                            "feature" : "task configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "resourcetaskattribute",
+                            "feature" : "resourcetaskattribute configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "user",
+                            "feature" : "user configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "userProfile",
+                            "feature" : "userProfile configuration access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "RING_GROUP_CONFIGURATION",
+                    "_id" : ObjectId("5d19f9843096b70001f928e5"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "sipuser",
+                            "feature" : "sipuser configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "group",
+                            "feature" : "group configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "enduser",
+                            "feature" : "enduser configuration access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "RULES",
+                    "_id" : ObjectId("5d19f9843096b70001f928e6"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "context",
+                            "feature" : "context configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "callrule",
+                            "feature" : "callrule configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "appreg",
+                            "feature" : "appreg configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "trunk",
+                            "feature" : "trunk configuration access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "SCHEDULER",
+                    "_id" : ObjectId("5d19f9843096b70001f928e7"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "schedule",
+                            "feature" : "schedule configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "appointment",
+                            "feature" : "appointment configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "SIPUSER_CONFIGURATION",
+                    "_id" : ObjectId("5d19f9843096b70001f928e8"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "sipuser",
+                            "feature" : "sipuser configuration access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "context",
+                            "feature" : "context configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "extension",
+                            "feature" : "extension configuration access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "enduser",
+                            "feature" : "enduser configuration access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "SLA_BREAKDOWN",
+                    "_id" : ObjectId("5d19f9843096b70001f928e9"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "queue",
+                            "feature" : "queue configuration access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "SMS_DETAIL_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928ea"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "sms",
+                            "feature" : "sms configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "fileservice",
+                            "feature" : "fileservice access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TAGMANAGER",
+                    "_id" : ObjectId("5d19f9843096b70001f928eb"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "tag",
+                            "feature" : "tag configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TEMPLATEMAKER",
+                    "_id" : ObjectId("5d19f9843096b70001f928ec"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "template",
+                            "feature" : "template configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TICKET_ATTACHMENT_SLOT",
+                    "_id" : ObjectId("5d19f9843096b70001f928ed"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "ticket",
+                            "feature" : "ticket access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "tag",
+                            "feature" : "tag access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TICKET_DASHBOARD",
+                    "_id" : ObjectId("5d19f9843096b70001f928ee"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "dashboardevent",
+                            "feature" : "dashboardevent configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "dashboardgraph",
+                            "feature" : "Dispatch configuration access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TICKET_DETAIL_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928ef"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "externalUser",
+                            "feature" : "externalUser access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "user",
+                            "feature" : "user access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "fileservice",
+                            "feature" : "fileservice access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "tag",
+                            "feature" : "tag access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "ticketstatusflow",
+                            "feature" : "ticketstatusflow access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "tickettypes",
+                            "feature" : "tickettypes access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "ticket",
+                            "feature" : "ticket access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TICKET_FILTER",
+                    "_id" : ObjectId("5d19f9843096b70001f928f0"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "ticket",
+                            "feature" : "ticket access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "ticketview",
+                            "feature" : "ticketview access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TICKET_FLOW",
+                    "_id" : ObjectId("5d19f9843096b70001f928f1"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "ticketstatusflow",
+                            "feature" : "ticketstatusflow access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "tickettypes",
+                            "feature" : "tickettypes access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TICKET_SLA",
+                    "_id" : ObjectId("5d19f9843096b70001f928f2"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "requestmeta",
+                            "feature" : "requestmeta configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "userGroup",
+                            "feature" : "userGroup configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "user",
+                            "feature" : "user configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "template",
+                            "feature" : "template configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "sla",
+                            "feature" : "sla configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TICKET_SUMMARY_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928f3"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "tag",
+                            "feature" : "tag access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "tickettypes",
+                            "feature" : "tickettypes access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "ticket",
+                            "feature" : "ticket access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TICKET_TAG_WISE_SUMMARY_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928f4"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "tag",
+                            "feature" : "tag access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "ticket",
+                            "feature" : "ticket access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TICKET_TRIGGER",
+                    "_id" : ObjectId("5d19f9843096b70001f928f5"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "userGroup",
+                            "feature" : "userGroup configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "user",
+                            "feature" : "user configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "triggers",
+                            "feature" : "triggers configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TIME_SHEET_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928f6"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "user",
+                            "feature" : "user access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "timer",
+                            "feature" : "timer access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TODO",
+                    "_id" : ObjectId("5d19f9843096b70001f928f7"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "todo",
+                            "feature" : "todo list access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "remind",
+                            "feature" : "remind configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TRANSLATIONS",
+                    "_id" : ObjectId("5d19f9843096b70001f928f8"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "callrule",
+                            "feature" : "callrule configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "TWITTER",
+                    "_id" : ObjectId("5d19f9843096b70001f928f9"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "social",
+                            "feature" : "socials configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "USERS",
+                    "_id" : ObjectId("5d19f9843096b70001f928fa"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "user",
+                            "feature" : "user configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "userScope",
+                            "feature" : "userScope configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }, 
+                        {
+                            "scope" : "console",
+                            "feature" : "console configuration access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "userAppScope",
+                            "feature" : "userAppScope configuration access",
+                            "read" : true,
+                            "write" : true
+                        }, 
+                        {
+                            "scope" : "sipuser",
+                            "feature" : "sipuser configuration access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "ZOHO_CRM",
+                    "_id" : ObjectId("5d19f9843096b70001f928fb"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "campaign",
+                            "feature" : "campaign access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "ZOHO_CRM_USERS",
+                    "_id" : ObjectId("5d19f9843096b70001f928fc"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "campaign",
+                            "feature" : "campaign access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "AGENT_DASHBOARD",
+                    "_id" : ObjectId("5d19f9843096b70001f928fd"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "sysmonitoring",
+                            "feature" : "sysmonitoring access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "dashboardevent",
+                            "feature" : "dashboardevent access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "dashboardgraph",
+                            "feature" : "dashboardgraph access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "task",
+                            "feature" : "task access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "ardsresource",
+                            "feature" : "ardsresource access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "HOURLY_BAND_REPORT",
+                    "_id" : ObjectId("5d19f9843096b70001f928fe"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "fileservice",
+                            "feature" : "fileservice access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "attribute",
+                            "feature" : "attribute access",
+                            "read" : true
+                        }, 
+                        {
+                            "scope" : "cdr",
+                            "feature" : "cdr access",
+                            "read" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "KNOWLEDGE_PORTAL",
+                    "_id" : ObjectId("5d19f9843096b70001f928ff"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "article",
+                            "feature" : "article api access",
+                            "read" : true,
+                            "write" : true,
+                            "delete" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "FILE_CAT_CONFIG",
+                    "_id" : ObjectId("5d19f9843096b70001f92900"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "fileservice",
+                            "feature" : "fileservice configuration access",
+                            "read" : true,
+                            "write" : true
+                        }
+                    ]
+                }, 
+                {
+                    "menuItem" : "USERDETAIL",
+                    "_id" : ObjectId("5d19f9843096b70001f92901"),
+                    "menuAction" : [ 
+                        {
+                            "scope" : "userGroup",
+                            "feature" : "userGroup access",
+                            "read" : true
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "user_scopes" : [ 
+        {
+            "scope" : "article",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "myNavigation",
+            "read" : true
+        }, 
+        {
+            "write" : true,
+            "scope" : "myUserProfile",
+            "read" : true
+        }, 
+        {
+            "scope" : "wallet",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "dashboardevent",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "dashboardgraph",
+            "read" : true
+        }, 
+        {
+            "scope" : "sysmonitoring",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "scope" : "Dispatch",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "scope" : "template",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "read" : true,
+            "scope" : "dialer",
+            "write" : true
+        }, 
+        {
+            "delete" : true,
+            "write" : true,
+            "scope" : "breaktype",
+            "read" : true
+        }, 
+        {
+            "write" : true,
+            "scope" : "extension",
+            "read" : true
+        }, 
+        {
+            "scope" : "agentDialer",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "scope" : "forms",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "delete" : true,
+            "scope" : "fileservice",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "scope" : "contact",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "write" : true,
+            "scope" : "notice",
+            "read" : true
+        }, 
+        {
+            "scope" : "notification",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "delete" : true,
+            "write" : true,
+            "scope" : "userGroup",
+            "read" : true
+        }, 
+        {
+            "delete" : true,
+            "write" : true,
+            "scope" : "qualityassurance",
+            "read" : true
+        }, 
+        {
+            "scope" : "events",
+            "read" : true
+        }, 
+        {
+            "delete" : true,
+            "scope" : "integration",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "scope" : "engagement",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "inbox",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "externalUser",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "ticket",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "delete" : true,
+            "write" : true,
+            "scope" : "tag",
+            "read" : true
+        }, 
+        {
+            "scope" : "timer",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "ticketview",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "delete" : true,
+            "write" : true,
+            "scope" : "tickettypes",
+            "read" : true
+        }, 
+        {
+            "delete" : true,
+            "write" : true,
+            "scope" : "ticketstatusflow",
+            "read" : true
+        }, 
+        {
+            "scope" : "todo",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "remind",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "write" : true,
+            "scope" : "cdr",
+            "read" : true
+        }, 
+        {
+            "scope" : "appreg",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "scope" : "audittrail",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "scope" : "autoattendance",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "delete" : true,
+            "scope" : "campaign",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "delete" : true,
+            "write" : true,
+            "scope" : "campaigncallbackreason",
+            "read" : true
+        }, 
+        {
+            "scope" : "campaigndnc",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "campaignnumbers",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "CampaignSchedule",
+            "read" : true
+        }, 
+        {
+            "delete" : true,
+            "scope" : "Operations",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "delete" : true,
+            "write" : true,
+            "scope" : "schedule",
+            "read" : true
+        }, 
+        {
+            "scope" : "campaignconfiguration",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "context",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "scope" : "enduser",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "scope" : "cluster",
+            "read" : true
+        }, 
+        {
+            "scope" : "conference",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "csat",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "scope" : "number",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "delete" : true,
+            "scope" : "social",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "scope" : "userfilecategory",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "queuemusic",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "limit",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "scope" : "trunk",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "trunkoperator",
+            "read" : true
+        }, 
+        {
+            "scope" : "voxbone",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "delete" : true,
+            "write" : true,
+            "scope" : "callrule",
+            "read" : true
+        }, 
+        {
+            "scope" : "pbxadmin",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "pbxuser",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "appointment",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "sms",
+            "read" : true
+        }, 
+        {
+            "scope" : "sla",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "triggers",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "sipuser",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "ardsrequest",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "requestmeta",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "queue",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "requestserver",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "attribute",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "group",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "ardsresource",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "resourcetaskattribute",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "task",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "productivity",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "Shared",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "taskinfo",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "user",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "userProfile",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "organisation",
+            "read" : true,
+            "write" : true
+        }, 
+        {
+            "scope" : "resource",
+            "read" : true
+        }, 
+        {
+            "scope" : "package",
+            "read" : true
+        }, 
+        {
+            "scope" : "console",
+            "read" : true
+        }, 
+        {
+            "scope" : "userScope",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "userAppScope",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "userMeta",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "userAppMeta",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "client",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "clientScope",
+            "read" : true,
+            "write" : true,
+            "delete" : true
+        }, 
+        {
+            "scope" : "AgentConsolemenu",
+            "read" : true
+        }, 
+        {
+            "scope" : "SoftPhone",
+            "read" : true
+        }
+    ],
+    "allowed_file_categories" : [ 
+        "VOICEMAIL", 
+        "CONVERSATION", 
+        "IVRCLIPS", 
+        "HOLDMUSIC", 
+        "REPORTS", 
+        "TICKET_ATTACHMENTS", 
+        "NOTICE_ATTACHMENTS", 
+        "PROFILE_PICTURES", 
+        "CHAT_ATTACHMENTS"
+    ],
+    "verified" : true,
+    "active" : true,
+    "__v" : 0,
+    "veeryaccount" : null,
+    "allowoutbound" : true,
+    "group" : ObjectId("5aa7a0d6246bd632550a6523")
+}
