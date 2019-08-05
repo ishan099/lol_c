@@ -1,0 +1,11 @@
+ALTER TABLE public."DB_CAMP_ContactInfos"
+ADD COLUMN "BusinessUnit" character varying(255)
+
+ALTER TABLE public."DB_CAMP_ContactSchedules"
+ADD COLUMN "DialerStatus" "enum_DB_CAMP_Contactbase_numbers_DialerStatus";
+
+CREATE TYPE public."enum_DB_CAMP_ContactSchedules_DialerStatus" AS ENUM
+('pick', 'dial', 'processing', 'added', 'removed_by_system', 'removed_by_api');
+
+ALTER TYPE public."enum_DB_CAMP_ContactSchedules_DialerStatus"
+OWNER TO duo;
