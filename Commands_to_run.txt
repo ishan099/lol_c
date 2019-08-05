@@ -1,0 +1,22 @@
+===========================================When shifting to app 2=============================================================================
+
+1. Stop these services on APP 01 & start them on APP 02
+
+	docker stop dashboard ardsliteroutingengine dashboarddataprocessor eventmonitor cdrengine eventsink scheduletaskworker abandonedcalldialer
+
+	docker start dashboard ardsliteroutingengine dashboarddataprocessor eventmonitor cdrengine eventsink scheduletaskworker abandonedcalldialer callbackservice 
+
+2. Reload the HA proxy which pointed to app 2
+	run the script 	app2pointed.sh
+	
+
+==================================================RollBack====================================================================================
+
+1. Stop these services on APP 02 & start them on APP 01
+
+	docker stop dashboard ardsliteroutingengine dashboarddataprocessor eventmonitor cdrengine eventsink scheduletaskworker abandonedcalldialer callbackservice
+	
+	docker start dashboard ardsliteroutingengine dashboarddataprocessor eventmonitor cdrengine eventsink scheduletaskworker abandonedcalldialer
+	
+2. Reload the HA proxy which pointed to app 1
+	run the script 	revert.sh
